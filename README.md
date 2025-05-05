@@ -13,7 +13,7 @@
 
 ## Project Structure
 ```
-rust-system-info
+Piko
 ├── src
 │   ├── main.rs          # Entry point of the application
 │   ├── system_info.rs   # Functions to gather system information
