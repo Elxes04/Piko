@@ -50,8 +50,11 @@ fn load_config_with_fallback(config_path: Option<PathBuf>) -> Value {
 fn main() {
     let cli = Cli::parse();
 
-    let config = load_config_with_fallback(cli.config);
+    let config_value = load_config_with_fallback(cli.config);
+
+    let config = config::Config::from_value(&config_value)
+        .expect("Failed to deserialize config");
 
     let system_info = system_info::get_system_info();
-    output::display_output(&system_info, &config);
+    output::display_output(&system_info, &config_value);
 }

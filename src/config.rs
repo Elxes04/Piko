@@ -3,7 +3,6 @@
 
 use serde::Deserialize;
 use std::collections::HashMap;
-use std::fs;
 use toml::Value;
 
 #[derive(Debug, Deserialize)]
@@ -19,17 +18,8 @@ pub struct OutputConfig {
 }
 
 impl Config {
-    pub fn new(config_path: &str) -> Result<Self, Box<dyn std::error::Error>> {
-        let config_content = fs::read_to_string(config_path)?;
-        let config: Config = toml::de::from_str(&config_content)?;
+    pub fn from_value(value: &Value) -> Result<Self, Box<dyn std::error::Error>> {
+        let config: Config = value.clone().try_into()?;
         Ok(config)
     }
-}
-
-pub fn load_config(config_path: &str) -> Result<Value, String> {
-    let config_content = fs::read_to_string(config_path)
-        .map_err(|e| format!("Failed to read config file: {}: {}", config_path, e))?;
-    config_content
-        .parse::<Value>()
-        .map_err(|e| format!("Failed to parse config file: {}", e))
 }
