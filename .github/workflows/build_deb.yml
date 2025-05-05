@@ -1,24 +1,14 @@
 name: Build and Release Debian Packages
 
 on:
-  pull_request:
-    types: [closed]
-    branches: [main]
+  push:
+    tags:
+      - 'v*.*.*'
 
 jobs:
-  build-and-release:
-    timeout-minutes: 30
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: false
-
+  build-and-release-amd64:
+    name: Build and Release (amd64)
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          - aarch64-unknown-linux-gnu
 
     steps:
       - name: Checkout repository
@@ -36,10 +26,10 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: ${{ matrix.target }}
+          target: x86_64-unknown-linux-gnu
           override: true
 
-      - name: Install cargo-deb (if not already installed)
+      - name: Install cargo-deb
         run: |
           if ! cargo install --list | grep -q "^cargo-deb "; then
             cargo install cargo-deb
@@ -47,25 +37,74 @@ jobs:
 
       - name: Build Debian package
         run: |
-          cargo build --release --target=${{ matrix.target }} --verbose
-          cargo deb --no-build --target=${{ matrix.target }} --maintainer Elxes04 --verbose
+          cargo build --release --target=x86_64-unknown-linux-gnu --verbose
+          cargo deb --no-build --target=x86_64-unknown-linux-gnu --verbose
 
       - name: Rename and move .deb file
         run: |
           mkdir -p artifacts
-          arch_name="${{ matrix.target }}"
-          arch_short=$(echo $arch_name | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/' | sed 's/-unknown-linux-gnu//')
-          cp target/${{ matrix.target }}/debian/*.deb artifacts/piko_${arch_short}.deb
+          cp target/x86_64-unknown-linux-gnu/debian/*.deb artifacts/piko_amd64.deb
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: debian-packages
+          name: debian-packages-amd64
           path: artifacts/
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
-        if: github.ref == 'refs/heads/main'
+        with:
+          files: artifacts/*.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-release-arm64:
+    name: Build and Release (arm64)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: aarch64-unknown-linux-gnu
+          override: true
+
+      - name: Install cargo-deb
+        run: |
+          if ! cargo install --list | grep -q "^cargo-deb "; then
+            cargo install cargo-deb
+          fi
+
+      - name: Build Debian package
+        run: |
+          cargo build --release --target=aarch64-unknown-linux-gnu --verbose
+          cargo deb --no-build --target=aarch64-unknown-linux-gnu --verbose
+
+      - name: Rename and move .deb file
+        run: |
+          mkdir -p artifacts
+          cp target/aarch64-unknown-linux-gnu/debian/*.deb artifacts/piko_arm64.deb
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debian-packages-arm64
+          path: artifacts/
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
         with:
           files: artifacts/*.deb
         env:
