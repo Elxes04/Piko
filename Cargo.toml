@@ -1,3 +1,14 @@
+[package.metadata.deb]
+maintainer = "Elxes04"
+maintainer-scripts = """
+postinst = target/debian/postinst
+"""
+depends = "libc6 (>= 2.31)"
+assets = [
+    ["target/release/piko", "usr/bin/piko", "755"],
+    ["config/default_config.toml", "usr/share/piko/default_config.toml", "644"]
+]
+
 [package]
 name = "piko"
 version = "0.1.0"
@@ -8,6 +19,7 @@ authors = ["Elxes04"]
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 clap = { version = "4", features = ["derive"] }
+reqwest = { version = "0.11", features = ["blocking", "rustls-tls"] }
 toml = "0.5"
 whoami = "1.2"
 sysinfo = "0.29"
