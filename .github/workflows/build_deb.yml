@@ -33,7 +33,7 @@ jobs:
       - name: Build Debian package
         run: |
           cargo build --release --target=${{ matrix.target }}
-          cargo deb --no-build --target=${{ matrix.target }}
+          cargo deb --no-build --target=${{ matrix.target }} --maintainer Elxes04
 
       - name: Rename and move .deb file
         run: |
