@@ -33,7 +33,7 @@ Clone the repository and navigate to the project directory:
 
 ```bash
 git clone https://github.com/Elxes04/piko.git
-cd Piko
+cd piko
 ```
 
 Build the project using Cargo:
