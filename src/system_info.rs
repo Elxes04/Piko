@@ -4,6 +4,7 @@ use std::process::Command;
 use std::collections::HashMap;
 use whoami;
 use sysinfo::{System, SystemExt, DiskExt};
+use std::fs;
 
 pub struct SystemInfo {
     pub os: String,
@@ -86,6 +87,54 @@ impl SystemInfo {
             disk_info.trim_end().to_string() // Remove trailing newline
         }
     }
+
+    // Add function to get the CPU model
+    fn get_cpu_model() -> String {
+        fs::read_to_string("/proc/cpuinfo")
+            .ok()
+            .and_then(|content| {
+                content
+                    .lines()
+                    .find(|line| line.starts_with("model name"))
+                    .map(|line| line.split(':').nth(1).unwrap_or("").trim().to_string())
+            })
+            .unwrap_or_else(|| "Unknown CPU Model".to_string())
+    }
+
+    // Add function to get the GPU model
+    fn get_gpu_model() -> String {
+        Command::new("lspci")
+            .arg("-nn")
+            .output()
+            .ok()
+            .and_then(|output| {
+                String::from_utf8_lossy(&output.stdout)
+                    .lines()
+                    .find(|line| line.contains("VGA compatible controller"))
+                    .map(|line| line.split(':').last().unwrap_or("").trim().to_string())
+            })
+            .unwrap_or_else(|| "Unknown GPU Model".to_string())
+    }
+
+    // Add function to get the kernel version
+    fn get_kernel_version() -> String {
+        Command::new("uname")
+            .arg("-r")
+            .output()
+            .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
+            .unwrap_or_else(|_| "Unknown Kernel Version".to_string())
+    }
+
+    // Add function to check if Xorg or Wayland is in use
+    fn get_display_server() -> String {
+        if std::env::var("WAYLAND_DISPLAY").is_ok() {
+            "Wayland".to_string()
+        } else if std::env::var("DISPLAY").is_ok() {
+            "Xorg".to_string()
+        } else {
+            "Unknown Display Server".to_string()
+        }
+    }
 }
 
 pub fn get_system_info() -> HashMap<String, String> {
@@ -100,13 +149,11 @@ pub fn get_system_info() -> HashMap<String, String> {
         whoami::fallible::hostname().unwrap_or_else(|_| "Unknown".to_string()),
     );
 
-    // Add Desktop Environment
     info.insert(
         "Desktop Environment".to_string(),
         std::env::var("XDG_CURRENT_DESKTOP").unwrap_or_else(|_| "Unknown".to_string()),
     );
 
-    // Convert RAM usage from KB to GiB and calculate percentage
     let used_memory_gib = system.used_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
     let total_memory_gib = system.total_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
     let memory_percentage = (used_memory_gib / total_memory_gib) * 100.0;
@@ -119,9 +166,14 @@ pub fn get_system_info() -> HashMap<String, String> {
         ),
     );
 
-    // Add disk information
     let disk_info = SystemInfo::get_disk_info();
     info.insert("Disks".to_string(), disk_info);
+
+    // Add new entries
+    info.insert("CPU Model".to_string(), SystemInfo::get_cpu_model());
+    info.insert("GPU Model".to_string(), SystemInfo::get_gpu_model());
+    info.insert("Kernel Version".to_string(), SystemInfo::get_kernel_version());
+    info.insert("Display Server".to_string(), SystemInfo::get_display_server());
 
     info
 }
