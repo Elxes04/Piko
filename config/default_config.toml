@@ -1,0 +1,16 @@
+layout = "default"
+
+[output]
+show_os = true
+show_cpu = true
+show_memory = true
+show_disk = true
+show_uptime = true
+
+[customization]
+color_scheme = "default"
+font_size = 12
+alignment = "left"
+
+# Keys to display in the output (customizable)
+info_keys = ["OS", "Username", "Hostname", "RAM Usage", "Desktop Environment"]
