@@ -1,5 +1,3 @@
-# rust-system-info
-
 ## Overview
 `Piko` is a command-line application written in Rust that gathers and displays system information in a customizable format. Inspired by tools like Neofetch, this application allows users to view details about their operating system, CPU, memory usage, and more, with the ability to customize the output layout through a configuration file.
 
