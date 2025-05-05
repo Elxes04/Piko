@@ -2,12 +2,20 @@
 // It exports a struct Config that holds the customizable layout settings for the output.
 
 use serde::Deserialize;
+use std::collections::HashMap;
 use std::fs;
 use toml::Value;
 
 #[derive(Debug, Deserialize)]
 pub struct Config {
     pub layout: String,
+    pub output: OutputConfig,
+    pub colors: HashMap<String, String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct OutputConfig {
+    pub info_keys: Vec<String>,
 }
 
 impl Config {

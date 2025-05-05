@@ -7,10 +7,26 @@ show_memory = true
 show_disk = true
 show_uptime = true
 
+# Keys to display in the output (customizable and ordered)
+info_keys = ["OS", "Username", "Hostname", "Desktop Environment", "Memory", "Disks"]
+
 [customization]
 color_scheme = "default"
 font_size = 12
 alignment = "left"
 
-# Keys to display in the output (customizable)
-info_keys = ["OS", "Username", "Hostname", "RAM Usage", "Desktop Environment"]
+[colors]
+OS = "blue"
+Username = "green"
+Hostname = "yellow"
+Desktop_Environment = "magenta"
+Memory = "cyan"
+Disks = "magenta"
+
+[symbols]
+OS = "\U0001f5a5\ufe0f"
+Username = "\U0001f464"
+Hostname = "\U0001f4e1"
+Desktop_Environment = "\U0001f5bc\ufe0f"
+Memory = "\U0001f4be"
+Disks = "\U0001f4c2"

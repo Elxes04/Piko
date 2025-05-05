@@ -3,7 +3,7 @@
 use std::process::Command;
 use std::collections::HashMap;
 use whoami;
-use sysinfo::{System, SystemExt};
+use sysinfo::{System, SystemExt, DiskExt};
 
 pub struct SystemInfo {
     pub os: String,
@@ -56,11 +56,35 @@ impl SystemInfo {
     }
 
     fn get_disk_info() -> String {
-        Command::new("df")
-            .arg("-h")
-            .output()
-            .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
-            .unwrap_or_else(|_| "Unknown Disk".to_string())
+        let mut system = System::new_all();
+        system.refresh_disks_list();
+
+        let mut disk_info = String::new();
+
+        for disk in system.disks() {
+            let total_space = disk.total_space() as f64 / 1024.0 / 1024.0 / 1024.0; // Convert to GiB
+            let available_space = disk.available_space() as f64 / 1024.0 / 1024.0 / 1024.0; // Convert to GiB
+            let used_space = total_space - available_space;
+            let used_percentage = (used_space / total_space) * 100.0;
+
+            let mount_point = disk.mount_point().to_string_lossy();
+            let file_system = String::from_utf8_lossy(disk.file_system());
+
+            disk_info.push_str(&format!(
+                "Disk ({}): {:.2} GiB / {:.2} GiB ({:.0}%) - {}\n",
+                mount_point,
+                used_space,
+                total_space,
+                used_percentage,
+                file_system
+            ));
+        }
+
+        if disk_info.is_empty() {
+            "No disks found".to_string()
+        } else {
+            disk_info.trim_end().to_string() // Remove trailing newline
+        }
     }
 }
 
@@ -76,6 +100,12 @@ pub fn get_system_info() -> HashMap<String, String> {
         whoami::fallible::hostname().unwrap_or_else(|_| "Unknown".to_string()),
     );
 
+    // Add Desktop Environment
+    info.insert(
+        "Desktop Environment".to_string(),
+        std::env::var("XDG_CURRENT_DESKTOP").unwrap_or_else(|_| "Unknown".to_string()),
+    );
+
     // Convert RAM usage from KB to GiB and calculate percentage
     let used_memory_gib = system.used_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
     let total_memory_gib = system.total_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
@@ -89,10 +119,9 @@ pub fn get_system_info() -> HashMap<String, String> {
         ),
     );
 
-    info.insert(
-        "Desktop Environment".to_string(),
-        std::env::var("XDG_CURRENT_DESKTOP").unwrap_or_else(|_| "Unknown".to_string()),
-    );
+    // Add disk information
+    let disk_info = SystemInfo::get_disk_info();
+    info.insert("Disks".to_string(), disk_info);
 
     info
 }
