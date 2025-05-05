@@ -7,7 +7,11 @@ on:
 
 jobs:
   build-and-release:
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'development'
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: false
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,6 +24,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -27,13 +39,16 @@ jobs:
           target: ${{ matrix.target }}
           override: true
 
-      - name: Install cargo-deb
-        run: cargo install cargo-deb
+      - name: Install cargo-deb (if not already installed)
+        run: |
+          if ! cargo install --list | grep -q "^cargo-deb "; then
+            cargo install cargo-deb
+          fi
 
       - name: Build Debian package
         run: |
-          cargo build --release --target=${{ matrix.target }}
-          cargo deb --no-build --target=${{ matrix.target }} --maintainer Elxes04
+          cargo build --release --target=${{ matrix.target }} --verbose
+          cargo deb --no-build --target=${{ matrix.target }} --maintainer Elxes04 --verbose
 
       - name: Rename and move .deb file
         run: |
