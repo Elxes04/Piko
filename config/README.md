@@ -9,7 +9,7 @@ This README provides information on how to customize the configuration file for 
 The default configuration file is located at:
 
 ```
-rust-system-info/config/default_config.toml
+Piko/config/default_config.toml
 ```
 
 You can create a custom configuration file by copying `default_config.toml` and modifying it as needed.

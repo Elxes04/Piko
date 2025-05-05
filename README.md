@@ -33,7 +33,7 @@ Clone the repository and navigate to the project directory:
 
 ```bash
 git clone https://github.com/Elxes04/piko.git
-cd rust-system-info
+cd Piko
 ```
 
 Build the project using Cargo:
@@ -46,7 +46,7 @@ cargo build --release
 After building the project, you can run the application with:
 
 ```bash
-./target/release/rust-system-info
+./target/release/piko
 ```
 
 The application will read the configuration from `config/default_config.toml` and display the system information according to the specified layout.
