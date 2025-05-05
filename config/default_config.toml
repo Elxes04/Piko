@@ -7,8 +7,18 @@ show_memory = true
 show_disk = true
 show_uptime = true
 
-# Keys to display in the output (customizable and ordered)
-info_keys = ["OS", "Username", "Hostname", "Desktop Environment", "Memory", "Disks"]
+info_keys = [
+    "OS",
+    "Kernel Version",
+    "Desktop Environment",
+    "Display Server",
+    "CPU Model",
+    "Memory",
+    "GPU Model",
+    "Username",
+    "Hostname",
+    "Disks"
+]
 
 [customization]
 color_scheme = "default"
@@ -16,12 +26,16 @@ font_size = 12
 alignment = "left"
 
 [colors]
-OS = "blue"
-Username = "green"
-Hostname = "yellow"
-Desktop_Environment = "magenta"
-Memory = "cyan"
-Disks = "magenta"
+OS = "#0000FF"  # Blue
+Username = "#008000"  # Green
+Hostname = "#FFFF00"  # Yellow
+"Desktop Environment" = "#FF00FF"  # Magenta
+Memory = "#00FFFF"  # Cyan
+Disks = "#FF00FF"  # Magenta
+"CPU Model" = "#FF0000"  # Red
+"GPU Model" = "#00FF00"  # Bright Green
+"Kernel Version" = "#FFA500"  # Orange
+"Display Server" = "#00CED1"  # Dark Turquoise
 
 [symbols]
 OS = "\U0001f5a5\ufe0f"
@@ -30,3 +44,7 @@ Hostname = "\U0001f4e1"
 Desktop_Environment = "\U0001f5bc\ufe0f"
 Memory = "\U0001f4be"
 Disks = "\U0001f4c2"
+"CPU Model" = "\U0001f9ea"
+"GPU Model" = "\U0001f5a8\ufe0f"
+"Kernel Version" = "\U0001f4bb"
+"Display Server" = "\U0001f5b1\ufe0f"
