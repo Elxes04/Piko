@@ -24,14 +24,6 @@ impl OutputConfig {
     }
 }
 
-pub fn format_output(system_info: &str, config: &OutputConfig) -> String {
-    match config.layout.as_str() {
-        "simple" => format!("System Information:\n{}", system_info),
-        "detailed" => format!("=== System Information ===\n{}", system_info),
-        _ => format!("Unsupported layout. Defaulting to simple:\n{}", system_info),
-    }
-}
-
 pub fn display_output(system_info: &HashMap<String, String>, config: &Value) {
     // Get the ordered keys to display
     let info_keys = config
