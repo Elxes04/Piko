@@ -6,12 +6,22 @@ show_cpu = true
 show_memory = true
 show_disk = true
 show_uptime = true
+show_cpu_model = true
+show_gpu_model = true
+show_kernel_version = true
+show_display_server = true
+show_desktop_environment = true
+show_username = true
+show_hostname = true
+show_disks = true
+
 
 info_keys = [
     "OS",
     "Kernel Version",
     "Desktop Environment",
     "Display Server",
+    "Uptime",
     "CPU Model",
     "Memory",
     "GPU Model",
@@ -36,6 +46,7 @@ Disks = "#FF4500"  # Orange Red
 "GPU Model" = "#7FFF00"  # Chartreuse
 "Kernel Version" = "#FF6347"  # Tomato
 "Display Server" = "#4682B4"  # Steel Blue
+Uptime = "#FFD700"  # Gold
 
 [symbols]
 OS = "\U0001f5a5\ufe0f"
@@ -48,3 +59,4 @@ Disks = "\U0001f4c2"
 "GPU Model" = "\U0001f5a8\ufe0f"
 "Kernel Version" = "\U0001f4bb"
 "Display Server" = "\U0001f5b1\ufe0f"
+Uptime = "\U000023F0"

@@ -25,7 +25,6 @@ impl OutputConfig {
 }
 
 pub fn display_output(system_info: &HashMap<String, String>, config: &Value) {
-    // Get the ordered keys to display
     let info_keys = config
         .get("output")
         .and_then(|output| output.get("info_keys"))
@@ -37,7 +36,11 @@ pub fn display_output(system_info: &HashMap<String, String>, config: &Value) {
         })
         .unwrap_or_else(|| system_info.keys().cloned().collect());
 
-    // Get colors
+    let dummy_map = toml::map::Map::new();
+    let show_flags = config.get("output")
+        .and_then(|output| output.as_table())
+        .unwrap_or(&dummy_map);
+
     let colors = config
         .get("colors")
         .and_then(|c| c.as_table())
@@ -48,7 +51,6 @@ pub fn display_output(system_info: &HashMap<String, String>, config: &Value) {
         })
         .unwrap_or_default();
 
-    // Get symbols
     let symbols = config
         .get("symbols")
         .and_then(|s| s.as_table())
@@ -59,23 +61,36 @@ pub fn display_output(system_info: &HashMap<String, String>, config: &Value) {
         })
         .unwrap_or_default();
 
+    let default_color = "#FFFFFF".to_string();
+
     for key in info_keys {
-        if let Some(value) = system_info.get(&key) {
-            let default_color = "#FFFFFF".to_string(); // Default to white
-            let color_hex = colors.get(&key).unwrap_or(&default_color);
+        // Build the flag key (e.g., "CPU Model" => "show_cpu_model")
+        let flag_key = format!(
+            "show_{}",
+            key.to_lowercase()
+                .chars()
+                .map(|c| if c.is_alphanumeric() { c } else { '_' })
+                .collect::<String>()
+        );
 
-            // Convert HEX to RGB
-            let rgb_color = hex_to_rgb(color_hex).unwrap_or((255, 255, 255)); // Default to white if invalid
+        let show_entry = show_flags
+            .get(&flag_key)
+            .and_then(|v| v.as_bool())
+            .unwrap_or(true); // Default to true if the flag is not present
 
-            let symbol = symbols.get(&key).map(String::as_str).unwrap_or("");
+        if show_entry {
+            if let Some(value) = system_info.get(&key) {
+                let color_hex = colors.get(&key).unwrap_or(&default_color);
+                let rgb_color = hex_to_rgb(color_hex).unwrap_or((255, 255, 255));
+                let symbol = symbols.get(&key).map(String::as_str).unwrap_or("");
 
-            // Use truecolor for RGB
-            println!(
-                "{} {}: {}",
-                symbol,
-                key.truecolor(rgb_color.0, rgb_color.1, rgb_color.2),
-                value.truecolor(rgb_color.0, rgb_color.1, rgb_color.2)
-            );
+                println!(
+                    "{} {}: {}",
+                    symbol,
+                    key.truecolor(rgb_color.0, rgb_color.1, rgb_color.2),
+                    value.truecolor(rgb_color.0, rgb_color.1, rgb_color.2)
+                );
+            }
         }
     }
 }

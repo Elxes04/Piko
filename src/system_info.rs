@@ -88,7 +88,6 @@ impl SystemInfo {
         }
     }
 
-    // Add function to get the CPU model
     fn get_cpu_model() -> String {
         fs::read_to_string("/proc/cpuinfo")
             .ok()
@@ -101,7 +100,19 @@ impl SystemInfo {
             .unwrap_or_else(|| "Unknown CPU Model".to_string())
     }
 
-    // Add function to get the GPU model
+    pub fn get_uptime_pretty(system: &System) -> String {
+        let uptime_seconds = system.uptime();
+        let hours = uptime_seconds / 3600;
+        let minutes = (uptime_seconds % 3600) / 60;
+        let days = hours / 24;
+        
+        if days > 0 {
+            format!("{}d {:02}h {:02}m", days, hours % 24, minutes)
+        } else {
+            format!("{:02}h {:02}m", hours, minutes)
+        }
+    }
+
     fn get_gpu_model() -> String {
         Command::new("lspci")
             .arg("-nn")
@@ -121,7 +132,6 @@ impl SystemInfo {
             .unwrap_or_else(|| "Unknown GPU Model".to_string())
     }
 
-    // Add function to get the kernel version
     fn get_kernel_version() -> String {
         Command::new("uname")
             .arg("-r")
@@ -130,7 +140,6 @@ impl SystemInfo {
             .unwrap_or_else(|_| "Unknown Kernel Version".to_string())
     }
 
-    // Add function to check if Xorg or Wayland is in use
     fn get_display_server() -> String {
         if std::env::var("WAYLAND_DISPLAY").is_ok() {
             "Wayland".to_string()
@@ -147,7 +156,6 @@ pub fn get_system_info() -> HashMap<String, String> {
     let mut system = System::new_all();
     system.refresh_all();
 
-    info.insert("OS".to_string(), whoami::platform().to_string());
     info.insert("Username".to_string(), whoami::username().to_string());
     info.insert(
         "Hostname".to_string(),
@@ -173,14 +181,14 @@ pub fn get_system_info() -> HashMap<String, String> {
         ),
     );
 
-    let disk_info = SystemInfo::get_disk_info();
-    info.insert("Disks".to_string(), disk_info);
-
-    // Add new entries
+    info.insert("CPU".to_string(), SystemInfo::get_cpu_info());
     info.insert("CPU Model".to_string(), SystemInfo::get_cpu_model());
     info.insert("GPU Model".to_string(), SystemInfo::get_gpu_model());
+    info.insert("OS".to_string(), SystemInfo::get_os_info());
     info.insert("Kernel Version".to_string(), SystemInfo::get_kernel_version());
     info.insert("Display Server".to_string(), SystemInfo::get_display_server());
+    info.insert("Disk".to_string(), SystemInfo::get_disk_info());
+    info.insert("Uptime".to_string(), SystemInfo::get_uptime_pretty(&system));
 
     info
 }
