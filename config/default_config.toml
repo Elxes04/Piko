@@ -26,22 +26,22 @@ font_size = 12
 alignment = "left"
 
 [colors]
-OS = "#0000FF"  # Blue
-Username = "#008000"  # Green
-Hostname = "#FFFF00"  # Yellow
-"Desktop Environment" = "#FF00FF"  # Magenta
-Memory = "#00FFFF"  # Cyan
-Disks = "#FF00FF"  # Magenta
-"CPU Model" = "#FF0000"  # Red
-"GPU Model" = "#00FF00"  # Bright Green
-"Kernel Version" = "#FFA500"  # Orange
-"Display Server" = "#00CED1"  # Dark Turquoise
+OS = "#1E90FF"  # Dodger Blue
+Username = "#32CD32"  # Lime Green
+Hostname = "#FFD700"  # Gold
+"Desktop Environment" = "#FF69B4"  # Hot Pink
+Memory = "#00FA9A"  # Medium Spring Green
+Disks = "#FF4500"  # Orange Red
+"CPU Model" = "#8A2BE2"  # Blue Violet
+"GPU Model" = "#7FFF00"  # Chartreuse
+"Kernel Version" = "#FF6347"  # Tomato
+"Display Server" = "#4682B4"  # Steel Blue
 
 [symbols]
 OS = "\U0001f5a5\ufe0f"
 Username = "\U0001f464"
 Hostname = "\U0001f4e1"
-Desktop_Environment = "\U0001f5bc\ufe0f"
+"Desktop Environment" = "\U0001f320"
 Memory = "\U0001f4be"
 Disks = "\U0001f4c2"
 "CPU Model" = "\U0001f9ea"

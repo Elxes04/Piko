@@ -111,7 +111,12 @@ impl SystemInfo {
                 String::from_utf8_lossy(&output.stdout)
                     .lines()
                     .find(|line| line.contains("VGA compatible controller"))
-                    .map(|line| line.split(':').last().unwrap_or("").trim().to_string())
+                    .and_then(|line| {
+                        // Extract the part before the PCI ID and revision
+                        line.split('[')
+                            .next() // Take the part before the first '['
+                            .map(|part| part.split(':').last().unwrap_or("").trim().to_string())
+                    })
             })
             .unwrap_or_else(|| "Unknown GPU Model".to_string())
     }
@@ -151,7 +156,9 @@ pub fn get_system_info() -> HashMap<String, String> {
 
     info.insert(
         "Desktop Environment".to_string(),
-        std::env::var("XDG_CURRENT_DESKTOP").unwrap_or_else(|_| "Unknown".to_string()),
+        std::env::var("XDG_CURRENT_DESKTOP")
+            .or_else(|_| std::env::var("DESKTOP_SESSION"))
+            .unwrap_or_else(|_| "Unknown".to_string()),
     );
 
     let used_memory_gib = system.used_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
