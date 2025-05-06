@@ -122,15 +122,18 @@ impl SystemInfo {
                 String::from_utf8_lossy(&output.stdout)
                     .lines()
                     .find(|line| line.contains("VGA compatible controller"))
-                    .and_then(|line| {
-                        // Extract the part before the PCI ID and revision
-                        line.split('[')
-                            .next() // Take the part before the first '['
-                            .map(|part| part.split(':').last().unwrap_or("").trim().to_string())
+                    .map(|line| {
+                        // Rimuove tutto prima di ": " (es. "03:00.0 VGA ...: " -> "Advanced Micro Devices...")
+                        line.splitn(2, ": ")
+                            .nth(1)
+                            .unwrap_or("Unknown GPU Model")
+                            .trim()
+                            .to_string()
                     })
             })
             .unwrap_or_else(|| "Unknown GPU Model".to_string())
     }
+    
 
     fn get_kernel_version() -> String {
         Command::new("uname")
