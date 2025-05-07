@@ -2,11 +2,14 @@
 
 Welcome to the Piko documentation! Piko is a Neofetch-like tool designed to display system information in a user-friendly format. This documentation will guide you through the installation process, usage instructions, and configuration options available for the program.
 
-## Table of Contents
+```{toctree}
+:maxdepth: 2
+:caption: Table of Contents
 
-- [Installation](installation.md)
-- [Usage](usage.md)
-- [Configuration](configuration.md)
+installation
+configuration
+usage
+````
 
 ## Overview
 
