@@ -123,7 +123,6 @@ impl SystemInfo {
                     .lines()
                     .find(|line| line.contains("VGA compatible controller"))
                     .map(|line| {
-                        // Rimuove tutto prima di ": " (es. "03:00.0 VGA ...: " -> "Advanced Micro Devices...")
                         line.splitn(2, ": ")
                             .nth(1)
                             .unwrap_or("Unknown GPU Model")
