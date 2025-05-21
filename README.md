@@ -1,61 +1,107 @@
-## Overview
-`Piko` is a command-line application written in Rust that gathers and displays system information in a customizable format. Inspired by tools like Neofetch, this application allows users to view details about their operating system, CPU, memory usage, and more, with the ability to customize the output layout through a configuration file.
+# 🧩 Piko
 
-## Features
-- Gather system information such as:
-  - Operating System
-  - CPU details
-  - Memory usage
-  - Disk usage
-  - Network information (WIP)
-- Customizable output layout (WIP)
-- Cross-platform support for Linux and macOS
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS-green)
+![Status](https://img.shields.io/badge/status-WIP-yellow)
+![Rust](https://img.shields.io/badge/Rust-1.75%2B-orange)
+[![Docs](https://img.shields.io/badge/docs-online-success)](https://piko.readthedocs.io)
+[![CI](https://github.com/Elxes04/piko/actions/workflows/rust.yml/badge.svg)](https://github.com/Elxes04/piko/actions/workflows/rust.yml)
+[![Crates.io](https://img.shields.io/crates/v/piko.svg)](https://crates.io/crates/piko)
+[![Issues](https://img.shields.io/github/issues/Elxes04/piko)](https://github.com/Elxes04/piko/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/Elxes04/piko)](https://github.com/Elxes04/piko/pulls)
+[![Last Commit](https://img.shields.io/github/last-commit/Elxes04/piko)](https://github.com/Elxes04/piko/commits/main)
 
-## Project Structure
-```
-Piko
-├── src
-│   ├── main.rs          # Entry point of the application
-│   ├── system_info.rs   # Functions to gather system information
-│   ├── output.rs        # Functions to format and display output
-│   └── config.rs        # Configuration handling
-├── Cargo.toml           # Cargo configuration file
-├── config
-│   ├── default_config.toml  # Default configuration settings
-│   └── README.md          # Configuration customization documentation
+
+> A minimal, customizable system information tool written in Rust — inspired by Neofetch.
+
+📚 **Documentation**: [Piko's Docs](https://piko.readthedocs.io)
+
+---
+
+## ✨ Overview
+
+**Piko** is a lightweight and extensible command-line tool that gathers and displays system information in a customizable format. Inspired by tools like **Neofetch**, it offers a clean and flexible way to view details about your system — from OS to CPU, memory, and more.
+
+## 🚀 Features
+
+- 📦 Operating System details  
+- 🧠 CPU specifications  
+- 💾 Memory usage  
+- 🗃️ Disk usage  
+- 🌐 Network info *(WIP)*  
+- 🎛️ Customizable output layout *(WIP)*  
+- 🐧 Cross-platform: Linux & macOS  
+
+## 🧱 Project Structure
+
+```text
+piko/
+├── src/
+│   ├── main.rs           # Entry point
+│   ├── system_info.rs    # Collects system info
+│   ├── output.rs         # Output formatting
+│   └── config.rs         # Config file parsing
+├── config/
+│   ├── default_config.toml  # Default layout config
+│   └── README.md            # Configuration guide
+├── Cargo.toml            # Build & dependency config
 └── README.md             # Project documentation
+
 ```
 
-## Installation
-To build and run the application, ensure you have Rust installed on your system. You can install Rust using [rustup](https://rustup.rs/).
+## 🛠 Installation
 
-Clone the repository and navigate to the project directory:
+Ensure you have [Rust](https://rustup.rs/) installed:
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+```
+
+Clone and build the project:
 
 ```bash
 git clone https://github.com/Elxes04/piko.git
 cd piko
-```
-
-Build the project using Cargo:
-
-```bash
 cargo build --release
+
 ```
 
-## Usage
-After building the project, you can run the application with:
+## ⚙️ Usage
+
+After building, run the binary:
 
 ```bash
 ./target/release/piko
 ```
 
-The application will read the configuration from `config/default_config.toml` and display the system information according to the specified layout.
+It will load your layout from:
 
-## Configuration
-The layout of the output can be customized by editing the `config/default_config.toml` file. Refer to `config/README.md` for detailed instructions on available options and how to modify them.
+```text
+config/default_config.toml
+```
 
-## Contributing
-Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request.
+and display system info accordingly.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+## 🧩 Configuration
+
+Customize your output by editing:
+
+```text
+config/default_config.toml
+```
+
+For a full list of configuration options and examples, check out:
+
+📄 [Documentation on Read the Docs](https://piko.readthedocs.io)
+
+Or see the in-repo config/README.md
+
+## 🤝 Contributing
+
+Got an idea or improvement? Contributions are welcome!  
+Feel free to open an [issue](https://github.com/Elxes04/piko/issues) or submit a pull request 🚀
+
+## 📄 License
+
+Licensed under the MIT License.
