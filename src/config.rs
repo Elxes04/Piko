@@ -6,19 +6,23 @@ use std::collections::HashMap;
 use toml::Value;
 
 #[derive(Debug, Deserialize)]
-pub struct Config {
+pub struct Config
+{
     pub layout: String,
     pub output: OutputConfig,
     pub colors: HashMap<String, String>,
 }
 
 #[derive(Debug, Deserialize)]
-pub struct OutputConfig {
+pub struct OutputConfig
+{
     pub info_keys: Vec<String>,
 }
 
-impl Config {
-    pub fn from_value(value: &Value) -> Result<Self, Box<dyn std::error::Error>> {
+impl Config
+{
+    pub fn from_value(value: &Value) -> Result<Self, Box<dyn std::error::Error>>
+    {
         let config: Config = value.clone().try_into()?;
         Ok(config)
     }
