@@ -171,8 +171,8 @@ pub fn get_system_info() -> HashMap<String, String> {
             .unwrap_or_else(|_| "Unknown".to_string()),
     );
 
-    let used_memory_gib = system.used_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
-    let total_memory_gib = system.total_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
+    let used_memory_gib = system.used_memory() as f64 / f64::powf(1024.0, 3.0);
+    let total_memory_gib = system.total_memory() as f64 / f64::powf(1024.0, 3.0);
     let memory_percentage = (used_memory_gib / total_memory_gib) * 100.0;
 
     info.insert(
