@@ -5,6 +5,7 @@
 ![Status](https://img.shields.io/badge/status-Stable-green)
 ![Rust](https://img.shields.io/badge/Rust-1.75%2B-orange)
 [![Docs](https://img.shields.io/badge/docs-online-success)](https://piko.readthedocs.io)
+[![CI](https://github.com/Elxes04/Piko/actions/workflows/test.yml/badge.svg)](https://github.com/Elxes04/Piko/actions/workflows/test.yml)
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Elxes04/Piko/releases)
 [![Issues](https://img.shields.io/github/issues/Elxes04/piko)](https://github.com/Elxes04/piko/issues)
