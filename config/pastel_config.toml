@@ -15,7 +15,6 @@ show_username = true
 show_hostname = true
 show_disks = true
 
-
 info_keys = [
     "OS",
     "Kernel Version",
@@ -31,23 +30,23 @@ info_keys = [
 ]
 
 [customization]
-color_scheme = "default"
+color_scheme = "pastel"
 font_size = 12
 alignment = "left"
 
 [colors]
-# Modern Dracula-inspired palette with Nord accents
-OS = "#FF79C6"  # Pink - vibrant and eye-catching
-Username = "#50FA7B"  # Green - fresh and modern
-Hostname = "#F1FA8C"  # Yellow - warm and friendly
-"Desktop Environment" = "#BD93F9"  # Purple - elegant and sophisticated
-Memory = "#8BE9FD"  # Cyan - cool and technical
-Disks = "#FF5555"  # Red - attention-grabbing for storage
-"CPU Model" = "#6272A4"  # Blue-grey - professional and calm
-"GPU Model" = "#FFB86C"  # Orange - energetic and powerful
-"Kernel Version" = "#44475A"  # Dark grey - subtle and technical
-"Display Server" = "#A4FFFF"  # Light cyan - modern and clean
-Uptime = "#FF92DF"  # Light pink - soft and pleasant
+# Modern Pastel Palette - Soft and Elegant
+OS = "#FFB3BA"  # Soft Pink
+Username = "#BAFFC9"  # Soft Mint
+Hostname = "#FFFFBA"  # Soft Yellow
+"Desktop Environment" = "#E8BAFF"  # Soft Lavender
+Memory = "#BAE1FF"  # Soft Blue
+Disks = "#FFB3D9"  # Soft Rose
+"CPU Model" = "#B8E6B8"  # Soft Sage
+"GPU Model" = "#FFD4B3"  # Soft Peach
+"Kernel Version" = "#D4D4D4"  # Soft Grey
+"Display Server" = "#B3E6FF"  # Soft Sky Blue
+Uptime = "#FFE6B3"  # Soft Cream
 
 [symbols]
 OS = "\U0001f5a5\ufe0f"

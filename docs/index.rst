@@ -1,7 +1,7 @@
 Piko Documentation
 ==================
 
-Welcome to the Piko documentation! Piko is a Neofetch-like tool designed to display system information in a user-friendly format. This documentation will guide you through the installation process, usage instructions, and configuration options available for the program.
+Welcome to the Piko documentation! Piko is a minimal, customizable system information tool written in Rust — inspired by Neofetch. This documentation will guide you through the installation process, usage instructions, and configuration options available for the program.
 
 .. toctree::
    :maxdepth: 2
@@ -15,6 +15,18 @@ Overview
 --------
 
 Piko aims to provide a simple and efficient way to gather and display system information. Whether you're a developer, system administrator, or just a curious user, Piko can help you quickly access important details about your system.
+
+**Key Features:**
+
+- 📦 Operating System details - OS name, version, and architecture
+- 🧠 CPU specifications - Model, cores, and performance info
+- 💾 Memory usage - RAM usage with percentage and total capacity
+- 🗃️ Disk usage - Storage information and space utilization
+- ⏰ System uptime - How long the system has been running
+- 🖥️ GPU information - Graphics card details and drivers
+- 🎨 Multiple color schemes - Pre-made themes and custom colors
+- 🐧 Cross-platform - Linux & macOS support
+- ⚡ Fast and lightweight - Written in Rust for optimal performance
 
 Getting Started
 ---------------

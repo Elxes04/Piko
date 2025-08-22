@@ -15,7 +15,6 @@ show_username = true
 show_hostname = true
 show_disks = true
 
-
 info_keys = [
     "OS",
     "Kernel Version",
@@ -31,23 +30,23 @@ info_keys = [
 ]
 
 [customization]
-color_scheme = "default"
+color_scheme = "dark"
 font_size = 12
 alignment = "left"
 
 [colors]
-# Modern Dracula-inspired palette with Nord accents
-OS = "#FF79C6"  # Pink - vibrant and eye-catching
-Username = "#50FA7B"  # Green - fresh and modern
-Hostname = "#F1FA8C"  # Yellow - warm and friendly
-"Desktop Environment" = "#BD93F9"  # Purple - elegant and sophisticated
-Memory = "#8BE9FD"  # Cyan - cool and technical
-Disks = "#FF5555"  # Red - attention-grabbing for storage
-"CPU Model" = "#6272A4"  # Blue-grey - professional and calm
-"GPU Model" = "#FFB86C"  # Orange - energetic and powerful
-"Kernel Version" = "#44475A"  # Dark grey - subtle and technical
-"Display Server" = "#A4FFFF"  # Light cyan - modern and clean
-Uptime = "#FF92DF"  # Light pink - soft and pleasant
+# Dark Modern Palette - Elegant and Professional
+OS = "#E06C75"  # Soft Red
+Username = "#98C379"  # Soft Green
+Hostname = "#E5C07B"  # Soft Yellow
+"Desktop Environment" = "#C678DD"  # Soft Purple
+Memory = "#56B6C2"  # Soft Cyan
+Disks = "#FF6B6B"  # Bright Red
+"CPU Model" = "#61AFEF"  # Soft Blue
+"GPU Model" = "#FFA07A"  # Light Salmon
+"Kernel Version" = "#ABB2BF"  # Light Grey
+"Display Server" = "#4ECDC4"  # Turquoise
+Uptime = "#F8BBD9"  # Light Pink
 
 [symbols]
 OS = "\U0001f5a5\ufe0f"
