@@ -1,20 +1,14 @@
-[package.metadata.deb]
-maintainer = "Elxes04"
-maintainer-scripts = """
-postinst = target/debian/postinst
-"""
-depends = "libc6 (>= 2.31)"
-assets = [
-    ["target/release/piko", "usr/bin/piko", "755"],
-    ["config/default_config.toml", "usr/share/piko/default_config.toml", "644"]
-]
-
 [package]
 name = "piko"
 version = "0.2.1"
-edition = "2024"
+edition = "2021"
 license = "MIT"
-authors = ["Elxes04"]
+authors = ["Elxes04 <elxes04@example.com>"]
+description = "A minimal, customizable system information tool written in Rust — inspired by Neofetch"
+repository = "https://github.com/Elxes04/piko"
+keywords = ["system", "information", "neofetch", "cli", "rust"]
+categories = ["command-line-utilities", "system"]
+readme = "README.md"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -24,3 +18,52 @@ whoami = "1.2"
 sysinfo = "0.29"
 colored = "2.0"
 dirs = "6.0.0"
+
+# Debian/Ubuntu packaging
+[package.metadata.deb]
+maintainer = "Elxes04 <elxes04@example.com>"
+maintainer-scripts = """
+postinst = target/debian/postinst
+"""
+depends = "libc6 (>= 2.31)"
+assets = [
+    ["target/release/piko", "usr/bin/piko", "755"],
+    ["config/default_config.toml", "usr/share/piko/default_config.toml", "644"],
+    ["config/pastel_config.toml", "usr/share/piko/pastel_config.toml", "644"],
+    ["config/dark_config.toml", "usr/share/piko/dark_config.toml", "644"],
+    ["config/COLOR_SCHEMES.md", "usr/share/doc/piko/COLOR_SCHEMES.md", "644"],
+    ["README.md", "usr/share/doc/piko/README.md", "644"],
+    ["LICENSE", "usr/share/doc/piko/copyright", "644"]
+]
+
+# RPM packaging (Fedora, RHEL, etc.)
+[package.metadata.rpm]
+name = "piko"
+version = "0.2.1"
+release = "1"
+summary = "A minimal, customizable system information tool"
+description = "Piko is a lightweight and extensible command-line tool that gathers and displays system information in a customizable format."
+license = "MIT"
+group = "Applications/System"
+requires = ["libc >= 2.31"]
+files = [
+    ["target/release/piko", "/usr/bin/piko", "755"],
+    ["config/default_config.toml", "/usr/share/piko/default_config.toml", "644"],
+    ["config/pastel_config.toml", "/usr/share/piko/pastel_config.toml", "644"],
+    ["config/dark_config.toml", "/usr/share/piko/dark_config.toml", "644"],
+    ["config/COLOR_SCHEMES.md", "/usr/share/doc/piko/COLOR_SCHEMES.md", "644"],
+    ["README.md", "/usr/share/doc/piko/README.md", "644"],
+    ["LICENSE", "/usr/share/doc/piko/LICENSE", "644"]
+]
+
+# Arch Linux packaging
+[package.metadata.aur]
+name = "piko"
+version = "0.2.1"
+description = "A minimal, customizable system information tool written in Rust"
+url = "https://github.com/Elxes04/piko"
+license = "MIT"
+depends = ["glibc"]
+makedepends = ["rust", "cargo"]
+source = ["https://github.com/Elxes04/piko/archive/v${pkgver}.tar.gz"]
+sha256sums = ["SKIP"]

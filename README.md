@@ -185,6 +185,29 @@ Feel free to open an [issue](https://github.com/Elxes04/piko/issues) or submit a
 6. Push to the branch: `git push origin feature-name`
 7. Submit a pull request
 
+### CI/CD Pipeline
+
+The project includes automated CI/CD via GitHub Actions:
+
+- **Test Workflow**: Runs on every push and pull request
+  - Tests on Ubuntu and macOS
+  - Checks code formatting with `cargo fmt`
+  - Runs linter with `cargo clippy`
+  - Executes unit tests
+  - Builds release binary
+
+- **Release Workflow**: Runs on tag pushes
+  - Builds for multiple architectures (x86_64, aarch64, i686, armv7)
+  - Creates Debian packages for all architectures
+  - Creates GitHub release with packages
+  - Updates AUR package automatically
+
+To trigger a release:
+```bash
+git tag v0.2.1
+git push origin v0.2.1
+```
+
 ## 📄 License
 
 Licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
