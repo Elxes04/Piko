@@ -5,7 +5,7 @@
 
 # Configuration
 PROJECT_NAME = piko
-VERSION = 0.2.1
+VERSION = 1.0.0
 TARGETS = x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu i686-unknown-linux-gnu armv7-unknown-linux-gnueabihf
 
 # Default target
