@@ -4,8 +4,8 @@ use std::collections::HashMap;
 use std::fs;
 use std::process::Command;
 use sysinfo::{DiskExt, System, SystemExt};
-use whoami;
 
+#[allow(dead_code)]
 pub struct SystemInfo {
     pub os: String,
     pub cpu: String,
@@ -14,15 +14,6 @@ pub struct SystemInfo {
 }
 
 impl SystemInfo {
-    pub fn new() -> Self {
-        SystemInfo {
-            os: Self::get_os_info(),
-            cpu: Self::get_cpu_info(),
-            memory: Self::get_memory_info(),
-            disk: Self::get_disk_info(),
-        }
-    }
-
     fn get_os_info() -> String {
         if cfg!(target_os = "linux") {
             Command::new("uname")
@@ -46,14 +37,6 @@ impl SystemInfo {
             .output()
             .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
             .unwrap_or_else(|_| "Unknown CPU".to_string())
-    }
-
-    fn get_memory_info() -> String {
-        Command::new("free")
-            .arg("-h")
-            .output()
-            .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
-            .unwrap_or_else(|_| "Unknown Memory".to_string())
     }
 
     fn get_disk_info() -> String {
@@ -119,8 +102,8 @@ impl SystemInfo {
                     .lines()
                     .find(|line| line.contains("VGA compatible controller"))
                     .map(|line| {
-                        line.splitn(2, ": ")
-                            .nth(1)
+                        line.split_once(": ")
+                            .map(|x| x.1)
                             .unwrap_or("Unknown GPU Model")
                             .trim()
                             .to_string()

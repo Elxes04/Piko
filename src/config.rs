@@ -5,6 +5,7 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use toml::Value;
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize)]
 pub struct Config {
     pub layout: String,
@@ -12,6 +13,7 @@ pub struct Config {
     pub colors: HashMap<String, String>,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize)]
 pub struct OutputConfig {
     pub info_keys: Vec<String>,

@@ -14,10 +14,12 @@ fn hex_to_rgb(hex: &str) -> Option<(u8, u8, u8)> {
     }
 }
 
+#[allow(dead_code)]
 pub struct OutputConfig {
     pub layout: String,
 }
 
+#[allow(dead_code)]
 impl OutputConfig {
     pub fn new(layout: String) -> Self {
         OutputConfig { layout }

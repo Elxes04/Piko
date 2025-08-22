@@ -55,7 +55,7 @@ fn main() {
 
     let config_value = load_config(cli.config);
 
-    let config = config::Config::from_value(&config_value)
+    let _config = config::Config::from_value(&config_value)
         .expect("Unable to deserialize the configuration file");
 
     let system_info = system_info::get_system_info();
