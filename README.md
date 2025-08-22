@@ -5,8 +5,7 @@
 ![Status](https://img.shields.io/badge/status-Stable-green)
 ![Rust](https://img.shields.io/badge/Rust-1.75%2B-orange)
 [![Docs](https://img.shields.io/badge/docs-online-success)](https://piko.readthedocs.io)
-[![CI/CD](https://github.com/Elxes04/Piko/actions/workflows/test.yml/badge.svg)](https://github.com/Elxes04/Piko/actions/workflows/test.yml)
-[![Release](https://github.com/Elxes04/Piko/actions/workflows/release.yml/badge.svg)](https://github.com/Elxes04/Piko/actions/workflows/release.yml)
+
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Elxes04/Piko/releases)
 [![Issues](https://img.shields.io/github/issues/Elxes04/piko)](https://github.com/Elxes04/piko/issues)
 [![Pull Requests](https://img.shields.io/github/issues-pr/Elxes04/piko)](https://github.com/Elxes04/piko/pulls)
@@ -30,7 +29,6 @@
 - 🗃️ **Disk usage** - Storage information and space utilization
 - ⏰ **System uptime** - How long the system has been running
 - 🖥️ **GPU information** - Graphics card details and drivers
-- 🌐 **Network info** *(Coming Soon)*
 - 🎛️ **Customizable output layout** - Flexible display options
 - 🎨 **Multiple color schemes** - Pre-made themes and custom colors
 - 🐧 **Cross-platform** - Linux & macOS support
@@ -73,10 +71,6 @@ git clone https://github.com/Elxes04/piko.git
 cd piko
 cargo build --release
 ```
-
-### Package Installation
-
-When Piko is installed via package manager, the default configuration file is automatically copied to `/usr/share/piko/default_config.toml` and will be used automatically.
 
 ### Manual Installation
 
@@ -186,28 +180,7 @@ Feel free to open an [issue](https://github.com/Elxes04/piko/issues) or submit a
 6. Push to the branch: `git push origin feature-name`
 7. Submit a pull request
 
-### CI/CD Pipeline
 
-The project includes automated CI/CD via GitHub Actions:
-
-- **Test Workflow**: Runs on every push and pull request
-  - Tests on Ubuntu and macOS
-  - Checks code formatting with `cargo fmt`
-  - Runs linter with `cargo clippy`
-  - Executes unit tests
-  - Builds release binary
-
-- **Release Workflow**: Runs on tag pushes
-  - Builds for multiple architectures (x86_64, aarch64, i686, armv7)
-  - Creates Debian packages for all architectures
-  - Creates GitHub release with packages
-  - Updates AUR package automatically
-
-To trigger a release:
-```bash
-git tag v0.2.1
-git push origin v0.2.1
-```
 
 ## 📄 License
 
