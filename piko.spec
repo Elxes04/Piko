@@ -1,5 +1,5 @@
 Name:           piko
-Version:        0.2.1
+Version:        1.0.0
 Release:        1%{?dist}
 Summary:        A minimal, customizable system information tool
 
@@ -7,7 +7,7 @@ License:        MIT
 URL:            https://github.com/Elxes04/piko
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildArch:      noarch
+BuildArch:      x86_64
 BuildRequires:  rust
 BuildRequires:  cargo
 
@@ -43,5 +43,11 @@ install -m644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %{_datadir}/%{name}/*.md
 
 %changelog
+* Thu Aug 22 2024 Elxes04 <elxes04@example.com> - 1.0.0-1
+- First stable release with multi-distribution packaging
+- Added multiple color schemes
+- Improved configuration handling
+- Added CI/CD workflows
+
 * Mon Jan 01 2024 Elxes04 <elxes04@example.com> - 0.2.1-1
 - Initial package release
