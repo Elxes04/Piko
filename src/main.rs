@@ -1,7 +1,7 @@
 mod config;
+mod distro_logo;
 mod output;
 mod system_info;
-mod distro_logo;
 
 use clap::Parser;
 use std::fs;
@@ -40,8 +40,6 @@ struct Cli {
     #[arg(long, default_value = "ascii")]
     logo_style: String,
 
-
-
     /// Show border around output
     #[arg(long)]
     border: bool,
@@ -49,8 +47,6 @@ struct Cli {
     /// Hide separators between info lines
     #[arg(long)]
     no_separators: bool,
-
-
 
     /// Export configuration to file
     #[arg(long)]
@@ -93,24 +89,34 @@ fn load_config(config_path: Option<PathBuf>) -> Value {
 
 fn create_dynamic_config(cli: &Cli) -> Value {
     let mut config = load_config(None);
-    
+
     // Override config with CLI options
     if let Some(output) = config.get_mut("output") {
         if let Some(output_table) = output.as_table_mut() {
-            output_table.insert("logo_position".to_string(), toml::Value::String(cli.logo_position.clone()));
-            output_table.insert("logo_size".to_string(), toml::Value::String(cli.logo_size.clone()));
-            output_table.insert("logo_style".to_string(), toml::Value::String(cli.logo_style.clone()));
+            output_table.insert(
+                "logo_position".to_string(),
+                toml::Value::String(cli.logo_position.clone()),
+            );
+            output_table.insert(
+                "logo_size".to_string(),
+                toml::Value::String(cli.logo_size.clone()),
+            );
+            output_table.insert(
+                "logo_style".to_string(),
+                toml::Value::String(cli.logo_style.clone()),
+            );
         }
     }
 
     if let Some(display) = config.get_mut("display") {
         if let Some(display_table) = display.as_table_mut() {
             display_table.insert("border".to_string(), toml::Value::Boolean(cli.border));
-            display_table.insert("show_separators".to_string(), toml::Value::Boolean(!cli.no_separators));
+            display_table.insert(
+                "show_separators".to_string(),
+                toml::Value::Boolean(!cli.no_separators),
+            );
         }
     }
-
-
 
     config
 }

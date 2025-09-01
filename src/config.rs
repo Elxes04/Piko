@@ -23,7 +23,7 @@ pub struct OutputConfig {
     pub info_keys: Vec<String>,
     pub show_logo: Option<bool>,
     pub logo_position: Option<String>, // "left", "right", "top", "bottom"
-    pub logo_size: Option<String>, // "small", "medium", "large"
+    pub logo_size: Option<String>,     // "small", "medium", "large"
     pub logo_color: Option<String>,
     pub logo_style: Option<String>, // "ascii", "unicode", "minimal"
 }
@@ -75,7 +75,7 @@ impl Config {
     #[allow(dead_code)]
     pub fn get_theme_colors(&self) -> HashMap<String, String> {
         let mut colors = self.colors.clone();
-        
+
         // Note: theme is now a field, not an Option
         if let Some(primary) = &self.theme.primary_color {
             colors.insert("primary".to_string(), primary.clone());
@@ -86,7 +86,7 @@ impl Config {
         if let Some(accent) = &self.theme.accent_color {
             colors.insert("accent".to_string(), accent.clone());
         }
-        
+
         colors
     }
 

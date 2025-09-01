@@ -1,7 +1,16 @@
+use crate::distro_logo::{DistroLogo, LogoManager};
 use colored::*;
 use std::collections::HashMap;
 use toml::Value;
-use crate::distro_logo::{LogoManager, DistroLogo};
+
+#[derive(Debug)]
+struct LogoDisplayOptions {
+    position: String,
+    size: String,
+    style: String,
+    show_border: bool,
+    compact: bool,
+}
 
 // Helper function to convert HEX color to RGB
 fn hex_to_rgb(hex: &str) -> Option<(u8, u8, u8)> {
@@ -184,32 +193,35 @@ pub fn display_output(system_info: &HashMap<String, String>, config: &Value) {
 
     // Display with logo
     if let Some(distro_logo) = logo {
-        display_with_logo(distro_logo, &info_lines, logo_position, logo_size, logo_style, show_border, show_separators, separator_style, compact_mode);
+        let options = LogoDisplayOptions {
+            position: logo_position.to_string(),
+            size: logo_size.to_string(),
+            style: logo_style.to_string(),
+            show_border,
+            compact: compact_mode,
+        };
+        display_with_logo(distro_logo, &info_lines, &options);
     } else {
-        display_simple(&info_lines, show_border, show_separators, separator_style, compact_mode);
+        display_simple(
+            &info_lines,
+            show_border,
+            show_separators,
+            separator_style,
+            compact_mode,
+        );
     }
 }
 
-fn display_with_logo(
-    logo: &DistroLogo,
-    info_lines: &[String],
-    position: &str,
-    size: &str,
-    style: &str,
-    show_border: bool,
-    _show_separators: bool,
-    _separator_style: &str,
-    compact: bool,
-) {
-    let logo_art = get_logo_art(logo, size, style);
+fn display_with_logo(logo: &DistroLogo, info_lines: &[String], options: &LogoDisplayOptions) {
+    let logo_art = get_logo_art(logo, &options.size, &options.style);
     let logo_height = logo_art.len();
     let info_height = info_lines.len();
 
     // Find the maximum width of the logo for proper alignment
     let logo_width = logo_art.iter().map(|line| line.len()).max().unwrap_or(0);
-    let padding = if compact { 2 } else { 4 };
+    let padding = if options.compact { 2 } else { 4 };
 
-    if show_border {
+    if options.show_border {
         print_border_start();
     }
 
@@ -227,14 +239,18 @@ fn display_with_logo(
             None
         };
 
-        match position {
+        match options.position.as_str() {
             "left" => {
                 if let Some(logo_line) = logo_line {
                     // Print logo line with proper padding to align info
                     let current_logo_width = logo_line.len();
                     print!("{}", logo_line);
                     if let Some(info_line) = info_line {
-                        println!("{}{}", " ".repeat(logo_width - current_logo_width + padding), info_line);
+                        println!(
+                            "{}{}",
+                            " ".repeat(logo_width - current_logo_width + padding),
+                            info_line
+                        );
                     } else {
                         println!();
                     }
@@ -263,7 +279,11 @@ fn display_with_logo(
                     let current_logo_width = logo_line.len();
                     print!("{}", logo_line);
                     if let Some(info_line) = info_line {
-                        println!("{}{}", " ".repeat(logo_width - current_logo_width + padding), info_line);
+                        println!(
+                            "{}{}",
+                            " ".repeat(logo_width - current_logo_width + padding),
+                            info_line
+                        );
                     } else {
                         println!();
                     }
@@ -275,7 +295,7 @@ fn display_with_logo(
         }
     }
 
-    if show_border {
+    if options.show_border {
         print_border_end();
     }
 }
@@ -302,7 +322,7 @@ fn display_simple(
 
 fn get_logo_art(logo: &DistroLogo, size: &str, style: &str) -> Vec<String> {
     let mut art = logo.ascii_art.clone();
-    
+
     // Apply size modifications
     match size {
         "small" => {
@@ -346,7 +366,7 @@ fn print_border_end() {
 pub fn display_logo_only(config: &Value) {
     let logo_manager = LogoManager::new();
     let logo = logo_manager.get_detected_logo();
-    
+
     let size = config
         .get("output")
         .and_then(|output| output.get("logo_size"))
@@ -360,7 +380,7 @@ pub fn display_logo_only(config: &Value) {
         .unwrap_or("ascii");
 
     let logo_art = get_logo_art(logo, size, style);
-    
+
     for line in logo_art {
         println!("{}", line);
     }
@@ -370,7 +390,7 @@ pub fn display_logo_only(config: &Value) {
 pub fn list_available_logos() {
     let logo_manager = LogoManager::new();
     let logos = logo_manager.list_available_logos();
-    
+
     println!("Available logos:");
     for logo in logos {
         println!("  - {}", logo);
