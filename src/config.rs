@@ -72,6 +72,7 @@ impl Config {
         Ok(config)
     }
 
+    #[allow(dead_code)]
     pub fn get_theme_colors(&self) -> HashMap<String, String> {
         let mut colors = self.colors.clone();
         
@@ -89,30 +90,37 @@ impl Config {
         colors
     }
 
+    #[allow(dead_code)]
     pub fn should_show_logo(&self) -> bool {
         self.output.show_logo.unwrap_or(true)
     }
 
+    #[allow(dead_code)]
     pub fn get_logo_position(&self) -> &str {
         self.output.logo_position.as_deref().unwrap_or("left")
     }
 
+    #[allow(dead_code)]
     pub fn get_logo_size(&self) -> &str {
         self.output.logo_size.as_deref().unwrap_or("medium")
     }
 
+    #[allow(dead_code)]
     pub fn get_logo_style(&self) -> &str {
         self.output.logo_style.as_deref().unwrap_or("ascii")
     }
 
+    #[allow(dead_code)]
     pub fn is_compact_mode(&self) -> bool {
         self.display.compact.unwrap_or(false)
     }
 
+    #[allow(dead_code)]
     pub fn should_show_border(&self) -> bool {
         self.display.border.unwrap_or(false)
     }
 
+    #[allow(dead_code)]
     pub fn should_show_separators(&self) -> bool {
         self.display.show_separators.unwrap_or(true)
     }

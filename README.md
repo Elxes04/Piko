@@ -5,6 +5,7 @@ A highly customizable system information tool written in Rust — inspired by Ne
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Crates.io](https://img.shields.io/crates/v/piko)](https://crates.io/crates/piko)
 [![Build Status](https://github.com/Elxes04/piko/workflows/CI/badge.svg)](https://github.com/Elxes04/piko/actions)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/Elxes04/piko/releases)
 
 ## Features ✨
 
@@ -60,6 +61,10 @@ Piko includes built-in ASCII art logos for:
 ## Contributing 🤝
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+## Changelog 📝
+
+See [CHANGELOG.md](CHANGELOG.md) for a list of changes and version history.
 
 ### Adding New Distribution Logos
 

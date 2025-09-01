@@ -4,8 +4,10 @@ use std::path::Path;
 // use anyhow::Result;
 
 pub struct DistroLogo {
+    #[allow(dead_code)]
     pub name: String,
     pub ascii_art: Vec<String>,
+    #[allow(dead_code)]
     pub colors: Vec<String>,
 }
 

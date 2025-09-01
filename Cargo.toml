@@ -1,6 +1,6 @@
 [package]
 name = "piko"
-version = "1.0.0"
+version = "1.1.0"
 edition = "2021"
 license = "MIT"
 authors = ["Elxes04 <elxes04@example.com>"]
@@ -46,7 +46,7 @@ assets = [
 # RPM packaging (Fedora, RHEL, etc.)
 [package.metadata.rpm]
 name = "piko"
-version = "0.2.1"
+version = "1.1.0"
 release = "1"
 summary = "A minimal, customizable system information tool"
 description = "Piko is a lightweight and extensible command-line tool that gathers and displays system information in a customizable format."
@@ -66,7 +66,7 @@ files = [
 # Arch Linux packaging
 [package.metadata.aur]
 name = "piko"
-version = "0.2.1"
+version = "1.1.0"
 description = "A minimal, customizable system information tool written in Rust"
 url = "https://github.com/Elxes04/piko"
 license = "MIT"

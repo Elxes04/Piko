@@ -197,8 +197,8 @@ fn display_with_logo(
     size: &str,
     style: &str,
     show_border: bool,
-    show_separators: bool,
-    separator_style: &str,
+    _show_separators: bool,
+    _separator_style: &str,
     compact: bool,
 ) {
     let logo_art = get_logo_art(logo, size, style);
