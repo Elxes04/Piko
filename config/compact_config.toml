@@ -1,0 +1,67 @@
+layout = "compact"
+
+[output]
+show_os = true
+show_cpu = true
+show_memory = true
+show_disk = true
+show_uptime = true
+show_cpu_model = false
+show_gpu_model = false
+show_kernel_version = true
+show_display_server = false
+show_desktop_environment = true
+show_username = true
+show_hostname = true
+
+# Logo configuration
+show_logo = true
+logo_position = "left"
+logo_size = "small"
+logo_style = "minimal"
+
+info_keys = [
+    "OS",
+    "Kernel Version",
+    "Desktop Environment",
+    "Uptime",
+    "Memory",
+    "Username",
+    "Hostname"
+]
+
+[logo]
+enabled = true
+distro = "auto"
+padding = 1
+alignment = "left"
+
+[theme]
+name = "compact"
+primary_color = "#4ECDC4"
+secondary_color = "#45B7D1"
+accent_color = "#96CEB4"
+
+[display]
+border = false
+compact = true
+show_separators = false
+padding = 0
+
+[colors]
+OS = "#4ECDC4"
+Username = "#45B7D1"
+Hostname = "#96CEB4"
+"Desktop Environment" = "#FFEAA7"
+Memory = "#DDA0DD"
+"Kernel Version" = "#98D8C8"
+Uptime = "#F7DC6F"
+
+[symbols]
+OS = "🖥️"
+Username = "👤"
+Hostname = "🏠"
+"Desktop Environment" = "🖼️"
+Memory = "💾"
+"Kernel Version" = "🔧"
+Uptime = "⏰"

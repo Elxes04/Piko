@@ -18,6 +18,13 @@ whoami = "1.2"
 sysinfo = "0.29"
 colored = "2.0"
 dirs = "6.0.0"
+regex = "1.10"
+reqwest = { version = "0.11", features = ["blocking"] }
+base64 = "0.21"
+anyhow = "1.0"
+tokio = { version = "1.0", features = ["full"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
 
 # Debian/Ubuntu packaging
 [package.metadata.deb]
@@ -28,9 +35,9 @@ postinst = target/debian/postinst
 depends = "libc6 (>= 2.31)"
 assets = [
     ["target/release/piko", "usr/bin/piko", "755"],
-    ["config/default_config.toml", "usr/share/piko/default_config.toml", "644"],
-    ["config/pastel_config.toml", "usr/share/piko/pastel_config.toml", "644"],
-    ["config/dark_config.toml", "usr/share/piko/dark_config.toml", "644"],
+    ["config/default_config.toml", "etc/piko/default_config.toml", "644"],
+    ["config/pastel_config.toml", "etc/piko/pastel_config.toml", "644"],
+    ["config/dark_config.toml", "etc/piko/dark_config.toml", "644"],
     ["config/COLOR_SCHEMES.md", "usr/share/doc/piko/COLOR_SCHEMES.md", "644"],
     ["README.md", "usr/share/doc/piko/README.md", "644"],
     ["LICENSE", "usr/share/doc/piko/copyright", "644"]
@@ -48,9 +55,9 @@ group = "Applications/System"
 requires = ["libc >= 2.31"]
 files = [
     ["target/release/piko", "/usr/bin/piko", "755"],
-    ["config/default_config.toml", "/usr/share/piko/default_config.toml", "644"],
-    ["config/pastel_config.toml", "/usr/share/piko/pastel_config.toml", "644"],
-    ["config/dark_config.toml", "/usr/share/piko/dark_config.toml", "644"],
+    ["config/default_config.toml", "/etc/piko/default_config.toml", "644"],
+    ["config/pastel_config.toml", "/etc/piko/pastel_config.toml", "644"],
+    ["config/dark_config.toml", "/etc/piko/dark_config.toml", "644"],
     ["config/COLOR_SCHEMES.md", "/usr/share/doc/piko/COLOR_SCHEMES.md", "644"],
     ["README.md", "/usr/share/doc/piko/README.md", "644"],
     ["LICENSE", "/usr/share/doc/piko/LICENSE", "644"]

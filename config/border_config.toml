@@ -1,0 +1,83 @@
+layout = "bordered"
+
+[output]
+show_os = true
+show_cpu = true
+show_memory = true
+show_disk = true
+show_uptime = true
+show_cpu_model = true
+show_gpu_model = true
+show_kernel_version = true
+show_display_server = true
+show_desktop_environment = true
+show_username = true
+show_hostname = true
+
+# Logo configuration
+show_logo = true
+logo_position = "left"
+logo_size = "large"
+logo_style = "ascii"
+
+info_keys = [
+    "OS",
+    "Kernel Version",
+    "Desktop Environment",
+    "Display Server",
+    "Uptime",
+    "CPU Model",
+    "Memory",
+    "GPU Model",
+    "Username",
+    "Hostname",
+    "Disk"
+]
+
+[logo]
+enabled = true
+distro = "auto"
+padding = 3
+alignment = "left"
+
+[theme]
+name = "bordered"
+primary_color = "#FF6B6B"
+secondary_color = "#4ECDC4"
+accent_color = "#45B7D1"
+
+[display]
+border = true
+border_style = "double"
+border_color = "#FF6B6B"
+padding = 2
+margin = 1
+compact = false
+show_separators = true
+separator_style = "equals"
+
+[colors]
+OS = "#FF6B6B"
+Username = "#4ECDC4"
+Hostname = "#45B7D1"
+"Desktop Environment" = "#96CEB4"
+Memory = "#FFEAA7"
+Disk = "#DDA0DD"
+"CPU Model" = "#98D8C8"
+"GPU Model" = "#F7DC6F"
+"Kernel Version" = "#BB8FCE"
+"Display Server" = "#85C1E9"
+Uptime = "#F8C471"
+
+[symbols]
+OS = "🖥️"
+Username = "👤"
+Hostname = "🏠"
+"Desktop Environment" = "🖼️"
+Memory = "💾"
+Disk = "💿"
+"CPU Model" = "⚡"
+"GPU Model" = "🎮"
+"Kernel Version" = "🔧"
+"Display Server" = "🖥️"
+Uptime = "⏰"

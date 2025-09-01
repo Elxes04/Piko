@@ -15,6 +15,12 @@ show_username = true
 show_hostname = true
 show_disks = true
 
+# Logo configuration
+show_logo = true
+logo_position = "left"
+logo_size = "medium"
+logo_color = "auto"
+logo_style = "ascii"
 
 info_keys = [
     "OS",
@@ -27,8 +33,35 @@ info_keys = [
     "GPU Model",
     "Username",
     "Hostname",
-    "Disks"
+    "Disk"
 ]
+
+[logo]
+enabled = true
+custom_ascii = []
+custom_colors = []
+padding = 2
+alignment = "left"
+
+[theme]
+name = "default"
+primary_color = "#FF79C6"
+secondary_color = "#50FA7B"
+accent_color = "#BD93F9"
+background_color = ""
+text_color = "#F8F8F2"
+
+[display]
+# width = null
+# height = null
+border = false
+border_style = "single"
+border_color = "#6272A4"
+padding = 1
+margin = 0
+alignment = "left"
+show_separators = true
+separator_style = "dash"
 
 [customization]
 color_scheme = "default"
@@ -37,17 +70,17 @@ alignment = "left"
 
 [colors]
 # Modern Dracula-inspired palette with Nord accents
-OS = "#FF79C6"  # Pink - vibrant and eye-catching
-Username = "#50FA7B"  # Green - fresh and modern
-Hostname = "#F1FA8C"  # Yellow - warm and friendly
-"Desktop Environment" = "#BD93F9"  # Purple - elegant and sophisticated
-Memory = "#8BE9FD"  # Cyan - cool and technical
-Disks = "#FF5555"  # Red - attention-grabbing for storage
-"CPU Model" = "#6272A4"  # Blue-grey - professional and calm
-"GPU Model" = "#FFB86C"  # Orange - energetic and powerful
-"Kernel Version" = "#44475A"  # Dark grey - subtle and technical
-"Display Server" = "#A4FFFF"  # Light cyan - modern and clean
-Uptime = "#FF92DF"  # Light pink - soft and pleasant
+OS = "#FF79C6"
+Username = "#50FA7B"
+Hostname = "#F1FA8C"
+"Desktop Environment" = "#BD93F9"
+Memory = "#8BE9FD"
+Disk = "#FF5555"
+"CPU Model" = "#6272A4"
+"GPU Model" = "#FFB86C"
+"Kernel Version" = "#44475A"
+"Display Server" = "#A4FFFF"
+Uptime = "#FF92DF"
 
 [symbols]
 OS = "\U0001f5a5\ufe0f"
@@ -55,7 +88,7 @@ Username = "\U0001f464"
 Hostname = "\U0001f4e1"
 "Desktop Environment" = "\U0001f320"
 Memory = "\U0001f4be"
-Disks = "\U0001f4c2"
+Disk = "\U0001f4c2"
 "CPU Model" = "\U0001f9ea"
 "GPU Model" = "\U0001f5a8\ufe0f"
 "Kernel Version" = "\U0001f4bb"

@@ -1,40 +1,69 @@
-Piko Documentation
-==================
+Welcome to Piko's documentation!
+===============================
 
-Welcome to the Piko documentation! Piko is a minimal, customizable system information tool written in Rust — inspired by Neofetch. This documentation will guide you through the installation process, usage instructions, and configuration options available for the program.
+Piko is a highly customizable system information tool written in Rust — inspired by Neofetch.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Table of Contents
+   :caption: Contents:
 
    installation
-   usage
    configuration
+   usage
+   ADVANCED_FEATURES
 
-Overview
+Features
 --------
 
-Piko aims to provide a simple and efficient way to gather and display system information. Whether you're a developer, system administrator, or just a curious user, Piko can help you quickly access important details about your system.
+- **Automatic Distribution Detection**: Automatically detects and displays your Linux distribution logo
+- **Highly Customizable**: Extensive configuration options for colors, symbols, layout, and more
+- **Multiple Output Formats**: Support for normal, JSON, and YAML output
+- **Logo Support**: Built-in ASCII art logos for popular Linux distributions
+- **Flexible Layout**: Configurable logo position, size, and style
+- **Theme Support**: Multiple color themes and custom color schemes
+- **Export/Import**: Save and load your custom configurations
+- **Border Options**: Add decorative borders around your output
 
-**Key Features:**
+Quick Start
+-----------
 
-- 📦 Operating System details - OS name, version, and architecture
-- 🧠 CPU specifications - Model, cores, and performance info
-- 💾 Memory usage - RAM usage with percentage and total capacity
-- 🗃️ Disk usage - Storage information and space utilization
-- ⏰ System uptime - How long the system has been running
-- 🖥️ GPU information - Graphics card details and drivers
-- 🎨 Multiple color schemes - Pre-made themes and custom colors
-- 🐧 Cross-platform - Linux & macOS support
-- ⚡ Fast and lightweight - Written in Rust for optimal performance
+.. code-block:: bash
 
-Getting Started
----------------
+   # Show system information with default settings
+   piko
 
-To get started with Piko, please refer to the :doc:`installation` section for detailed instructions on how to install the program on your system.
+   # Show only the distribution logo
+   piko --logo-only
 
-For information on how to use Piko and its features, check out the :doc:`usage` section.
+   # List all available distribution logos
+   piko --list-logos
 
-If you need to customize Piko's behavior, the :doc:`configuration` section will provide you with all the necessary details on available options and settings.
+   # Get help
+   piko --help
 
-Happy exploring!
+Installation
+-----------
+
+For installation instructions, see the :doc:`installation` guide.
+
+Configuration
+------------
+
+For configuration options and customization, see the :doc:`configuration` guide.
+
+Usage
+-----
+
+For command-line options and usage examples, see the :doc:`usage` guide.
+
+Advanced Features
+----------------
+
+For advanced customization, automation, and integration, see the :doc:`ADVANCED_FEATURES` guide.
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
