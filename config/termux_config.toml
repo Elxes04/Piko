@@ -1,0 +1,72 @@
+layout = "default"
+
+[output]
+info_keys = [
+    "OS",
+    "Environment",
+    "Kernel Version",
+    "Display Server",
+    "Uptime",
+    "CPU Model",
+    "Memory",
+    "Username",
+    "Hostname",
+    "Disk"
+]
+show_logo = true
+logo_position = "left"
+logo_size = "small"
+logo_color = "auto"
+logo_style = "ascii"
+
+[logo]
+enabled = true
+distro = "auto"
+custom_ascii = []
+custom_colors = []
+padding = 2
+alignment = "left"
+
+[theme]
+name = "termux"
+primary_color = "#00BCD4"
+secondary_color = "#FFFFFF"
+accent_color = "#FFC107"
+background_color = ""
+text_color = "#FFFFFF"
+
+[display]
+border = false
+border_style = "single"
+border_color = "#00BCD4"
+padding = 1
+margin = 0
+alignment = "left"
+compact = true
+show_separators = true
+separator_style = "dash"
+
+[colors]
+# Termux-optimized color scheme with vibrant colors
+OS = "#FF5722"
+Environment = "#FF9800"
+Username = "#4CAF50"
+Hostname = "#2196F3"
+Memory = "#9C27B0"
+Disk = "#F44336"
+"CPU Model" = "#00BCD4"
+"Kernel Version" = "#607D8B"
+"Display Server" = "#E91E63"
+Uptime = "#FFC107"
+
+[symbols]
+OS = "\U0001f5a5\ufe0f"
+Environment = "\U0001f4bb"
+Username = "\U0001f464"
+Hostname = "\U0001f4e1"
+Memory = "\U0001f4be"
+Disk = "\U0001f4c2"
+"CPU Model" = "\U0001f9ea"
+"Kernel Version" = "\U0001f4bb"
+"Display Server" = "\U0001f5b1\ufe0f"
+Uptime = "\U000023F0"

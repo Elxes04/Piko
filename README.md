@@ -17,6 +17,7 @@ A highly customizable system information tool written in Rust — inspired by Ne
 - **Theme Support**: Multiple color themes and custom color schemes
 - **Export/Import**: Save and load your custom configurations
 - **Border Options**: Add decorative borders around your output
+- **Termux/Android Support**: Optimized for Android environments with smart partition filtering
 
 
 ## Documentation 📚

@@ -57,8 +57,20 @@ struct Cli {
     import_config: Option<PathBuf>,
 }
 
+fn is_termux() -> bool {
+    std::env::var("TERMUX_VERSION").is_ok() || 
+    std::env::var("PREFIX").map(|p| p.contains("/data/data/com.termux")).unwrap_or(false)
+}
+
 fn get_default_config_path() -> PathBuf {
-    if cfg!(target_os = "macos") {
+    if is_termux() {
+        // On Termux, use the user's home directory
+        dirs::home_dir()
+            .unwrap_or_else(|| PathBuf::from("."))
+            .join(".config")
+            .join("piko")
+            .join("default_config.toml")
+    } else if cfg!(target_os = "macos") {
         dirs::config_dir()
             .unwrap_or_else(|| PathBuf::from("."))
             .join("piko")
@@ -73,7 +85,15 @@ fn ensure_default_config_exists() {
 
     if !config_path.exists() {
         eprintln!("Configuration file not found at {}", config_path.display());
-        eprintln!("Please ensure Piko is properly installed.");
+        
+        if is_termux() {
+            eprintln!("On Termux, please ensure the config directory exists:");
+            eprintln!("  mkdir -p ~/.config/piko");
+            eprintln!("  cp config/default_config.toml ~/.config/piko/");
+        } else {
+            eprintln!("Please ensure Piko is properly installed.");
+        }
+        
         std::process::exit(1);
     }
 }
