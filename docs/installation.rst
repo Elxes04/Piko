@@ -103,7 +103,7 @@ Package Managers
 
     yay -S piko
 
-**Other distributions:** Check your package manager for Piko packages.
+
 
 Installation Locations
 ---------------------

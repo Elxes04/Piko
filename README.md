@@ -18,21 +18,6 @@ A highly customizable system information tool written in Rust — inspired by Ne
 - **Export/Import**: Save and load your custom configurations
 - **Border Options**: Add decorative borders around your output
 
-## Quick Start 🚀
-
-```bash
-# Show system information with default settings
-piko
-
-# Show only the distribution logo
-piko --logo-only
-
-# List all available distribution logos
-piko --list-logos
-
-# Get help
-piko --help
-```
 
 ## Documentation 📚
 
@@ -57,6 +42,7 @@ Piko includes built-in ASCII art logos for:
 - **Alpine** - Alpine's minimal logo
 - **Gentoo** - Gentoo's penguin logo
 - **Default** - Generic Linux logo
+
 
 ## Contributing 🤝
 

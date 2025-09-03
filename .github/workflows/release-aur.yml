@@ -1,0 +1,61 @@
+name: Release to AUR
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release-to-aur:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        
+    - name: Clone AUR repository
+      run: |
+        git clone https://aur.archlinux.org/piko.git aur-repo
+        cd aur-repo
+        
+    - name: Update PKGBUILD
+      run: |
+        # Extract version from tag (remove 'v' prefix)
+        VERSION=${GITHUB_REF#refs/tags/}
+        VERSION=${VERSION#v}
+        
+        # Update pkgver in PKGBUILD
+        sed -i "s/^pkgver=.*/pkgver=$VERSION/" PKGBUILD
+        
+        # Increment pkgrel
+        CURRENT_PKGREL=$(grep '^pkgrel=' PKGBUILD | cut -d'=' -f2)
+        NEW_PKGREL=$((CURRENT_PKGREL + 1))
+        sed -i "s/^pkgrel=.*/pkgrel=$NEW_PKGREL/" PKGBUILD
+        
+        echo "Updated to version $VERSION, pkgrel $NEW_PKGREL"
+        
+    - name: Update .SRCINFO
+      run: |
+        cd aur-repo
+        makepkg --printsrcinfo > .SRCINFO
+        
+    - name: Test build
+      run: |
+        cd aur-repo
+        makepkg --nobuild --nodeps
+        
+    - name: Commit and push to AUR
+      run: |
+        cd aur-repo
+        git add PKGBUILD .SRCINFO
+        git commit -m "Update to version ${GITHUB_REF#refs/tags/v}"
+        git push origin master
+        
+    - name: Notify completion
+      run: |
+        echo "Successfully released ${GITHUB_REF#refs/tags/} to AUR!"

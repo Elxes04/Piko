@@ -26,43 +26,6 @@ tokio = { version = "1.0", features = ["full"] }
 serde_json = "1.0"
 serde_yaml = "0.9"
 
-# Debian/Ubuntu packaging
-[package.metadata.deb]
-maintainer = "Elxes04 <elxes04@example.com>"
-maintainer-scripts = """
-postinst = target/debian/postinst
-"""
-depends = "libc6 (>= 2.31)"
-assets = [
-    ["target/release/piko", "usr/bin/piko", "755"],
-    ["config/default_config.toml", "etc/piko/default_config.toml", "644"],
-    ["config/pastel_config.toml", "etc/piko/pastel_config.toml", "644"],
-    ["config/dark_config.toml", "etc/piko/dark_config.toml", "644"],
-    ["config/COLOR_SCHEMES.md", "usr/share/doc/piko/COLOR_SCHEMES.md", "644"],
-    ["README.md", "usr/share/doc/piko/README.md", "644"],
-    ["LICENSE", "usr/share/doc/piko/copyright", "644"]
-]
-
-# RPM packaging (Fedora, RHEL, etc.)
-[package.metadata.rpm]
-name = "piko"
-version = "1.1.0"
-release = "1"
-summary = "A minimal, customizable system information tool"
-description = "Piko is a lightweight and extensible command-line tool that gathers and displays system information in a customizable format."
-license = "MIT"
-group = "Applications/System"
-requires = ["libc >= 2.31"]
-files = [
-    ["target/release/piko", "/usr/bin/piko", "755"],
-    ["config/default_config.toml", "/etc/piko/default_config.toml", "644"],
-    ["config/pastel_config.toml", "/etc/piko/pastel_config.toml", "644"],
-    ["config/dark_config.toml", "/etc/piko/dark_config.toml", "644"],
-    ["config/COLOR_SCHEMES.md", "/usr/share/doc/piko/COLOR_SCHEMES.md", "644"],
-    ["README.md", "/usr/share/doc/piko/README.md", "644"],
-    ["LICENSE", "/usr/share/doc/piko/LICENSE", "644"]
-]
-
 # Arch Linux packaging
 [package.metadata.aur]
 name = "piko"
