@@ -3,36 +3,38 @@ layout = "default"
 [output]
 info_keys = [
     "OS",
-    "Environment",
-    "Kernel Version",
-    "Display Server",
+    "Host",
+    "Kernel",
     "Uptime",
-    "CPU Model",
+    "Packages",
+    "Shell",
+    "Terminal",
+    "CPU",
+    "GPU",
     "Memory",
-    "Username",
-    "Hostname",
-    "Disk"
+    "Disk",
+    "Battery",
 ]
 show_logo = true
 logo_position = "left"
 logo_size = "small"
-logo_color = "auto"
 logo_style = "ascii"
+show_title = true
+show_title_separator = true
+show_color_blocks = true
+color_blocks_style = "circle"
 
 [logo]
 enabled = true
-distro = "auto"
-custom_ascii = []
-custom_colors = []
+distro = "android"
 padding = 2
 alignment = "left"
 
 [theme]
-name = "termux"
+name = "synthwave"
 primary_color = "#00BCD4"
 secondary_color = "#FFFFFF"
 accent_color = "#FFC107"
-background_color = ""
 text_color = "#FFFFFF"
 
 [display]
@@ -44,29 +46,35 @@ margin = 0
 alignment = "left"
 compact = true
 show_separators = true
-separator_style = "dash"
+separator_symbol = ":"
 
 [colors]
-# Termux-optimized color scheme with vibrant colors
 OS = "#FF5722"
-Environment = "#FF9800"
-Username = "#4CAF50"
-Hostname = "#2196F3"
+Host = "#FF9800"
+Kernel = "#607D8B"
+Uptime = "#FFC107"
+Packages = "#4CAF50"
+Shell = "#00BCD4"
+Terminal = "#00BCD4"
+CPU = "#00BCD4"
+GPU = "#E91E63"
 Memory = "#9C27B0"
 Disk = "#F44336"
-"CPU Model" = "#00BCD4"
-"Kernel Version" = "#607D8B"
-"Display Server" = "#E91E63"
-Uptime = "#FFC107"
+Battery = "#4CAF50"
 
 [symbols]
-OS = "\U0001f5a5\ufe0f"
-Environment = "\U0001f4bb"
-Username = "\U0001f464"
-Hostname = "\U0001f4e1"
-Memory = "\U0001f4be"
-Disk = "\U0001f4c2"
-"CPU Model" = "\U0001f9ea"
-"Kernel Version" = "\U0001f4bb"
-"Display Server" = "\U0001f5b1\ufe0f"
-Uptime = "\U000023F0"
+OS = ""
+Host = "󰌢"
+Kernel = ""
+Uptime = "󰅐"
+Packages = "󰏖"
+Shell = ""
+DE = "󰧨"
+WM = ""
+Terminal = ""
+CPU = ""
+GPU = "󰢮"
+Memory = "󰍛"
+Disk = "󰋊"
+Battery = "󰁹"
+

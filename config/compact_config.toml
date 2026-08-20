@@ -1,34 +1,24 @@
 layout = "compact"
 
 [output]
-show_os = true
-show_cpu = true
-show_memory = true
-show_disk = true
-show_uptime = true
-show_cpu_model = false
-show_gpu_model = false
-show_kernel_version = true
-show_display_server = false
-show_desktop_environment = true
-show_username = true
-show_hostname = true
+info_keys = [
+    "OS",
+    "Host",
+    "Kernel",
+    "Uptime",
+    "Packages",
+    "Shell",
+    "Memory",
+]
 
-# Logo configuration
 show_logo = true
 logo_position = "left"
 logo_size = "small"
-logo_style = "minimal"
-
-info_keys = [
-    "OS",
-    "Kernel Version",
-    "Desktop Environment",
-    "Uptime",
-    "Memory",
-    "Username",
-    "Hostname"
-]
+logo_style = "ascii"
+show_title = true
+show_title_separator = true
+show_color_blocks = true
+color_blocks_style = "circle"
 
 [logo]
 enabled = true
@@ -37,31 +27,33 @@ padding = 1
 alignment = "left"
 
 [theme]
-name = "compact"
-primary_color = "#4ECDC4"
-secondary_color = "#45B7D1"
-accent_color = "#96CEB4"
+name = "dracula"
+primary_color = "#FF79C6"
+secondary_color = "#50FA7B"
+accent_color = "#BD93F9"
 
 [display]
 border = false
 compact = true
-show_separators = false
+show_separators = true
+separator_symbol = ":"
 padding = 0
 
 [colors]
-OS = "#4ECDC4"
-Username = "#45B7D1"
-Hostname = "#96CEB4"
-"Desktop Environment" = "#FFEAA7"
-Memory = "#DDA0DD"
-"Kernel Version" = "#98D8C8"
-Uptime = "#F7DC6F"
+OS = "#FF79C6"
+Host = "#50FA7B"
+Kernel = "#BD93F9"
+Uptime = "#FFB86C"
+Packages = "#F1FA8C"
+Shell = "#8BE9FD"
+Memory = "#50FA7B"
 
 [symbols]
-OS = "🖥️"
-Username = "👤"
-Hostname = "🏠"
-"Desktop Environment" = "🖼️"
-Memory = "💾"
-"Kernel Version" = "🔧"
-Uptime = "⏰"
+OS = ""
+Host = "󰌢"
+Kernel = ""
+Uptime = "󰅐"
+Packages = "󰏖"
+Shell = ""
+Memory = "󰍛"
+

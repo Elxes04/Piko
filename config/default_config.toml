@@ -1,96 +1,97 @@
+# Piko Configuration File
 layout = "default"
 
 [output]
-show_os = true
-show_cpu = true
-show_memory = true
-show_disk = true
-show_uptime = true
-show_cpu_model = true
-show_gpu_model = true
-show_kernel_version = true
-show_display_server = true
-show_desktop_environment = true
-show_username = true
-show_hostname = true
-show_disks = true
+# List of information items to display in order:
+# Options: "OS", "Host", "Kernel", "Uptime", "Packages", "Shell",
+#          "DE", "WM", "Terminal", "CPU", "GPU", "Memory", "Disk", "Battery"
+info_keys = [
+    "OS",
+    "Host",
+    "Kernel",
+    "Uptime",
+    "Packages",
+    "Shell",
+    "DE",
+    "WM",
+    "Terminal",
+    "CPU",
+    "GPU",
+    "Memory",
+    "Disk",
+    "Battery",
+]
 
 # Logo configuration
 show_logo = true
-logo_position = "left"
-logo_size = "medium"
-logo_color = "auto"
-logo_style = "ascii"
+logo_position = "left"    # "left", "right", "top", "bottom"
+logo_size = "medium"       # "small", "medium", "large"
+logo_style = "ascii"       # "ascii", "unicode", "minimal"
 
-info_keys = [
-    "OS",
-    "Kernel Version",
-    "Desktop Environment",
-    "Display Server",
-    "Uptime",
-    "CPU Model",
-    "Memory",
-    "GPU Model",
-    "Username",
-    "Hostname",
-    "Disk"
-]
+# Header & palette blocks
+show_title = true          # Display user@hostname
+show_title_separator = true # Underline delimiter
+show_color_blocks = true   # Display color palette blocks at bottom
+color_blocks_style = "circle" # "circle" (●) or "block" (█)
 
 [logo]
 enabled = true
-custom_ascii = []
-custom_colors = []
+distro = "auto"            # "auto" or specific distro name
 padding = 2
 alignment = "left"
 
 [theme]
-name = "default"
-primary_color = "#FF79C6"
-secondary_color = "#50FA7B"
-accent_color = "#BD93F9"
-background_color = ""
-text_color = "#F8F8F2"
+# Built-in themes: "default", "dracula", "catppuccin", "catppuccin-latte",
+#                  "nord", "gruvbox", "tokyo-night", "one-dark", "solarized",
+#                  "rose-pine", "synthwave"
+name = "catppuccin"
+primary_color = "#CBA6F7"
+secondary_color = "#89B4FA"
+accent_color = "#A6E3A1"
+text_color = "#CDD6F4"
 
 [display]
-# width = null
-# height = null
 border = false
-border_style = "single"
-border_color = "#6272A4"
+border_style = "rounded"   # "single", "double", "rounded", "bold", "none"
+border_color = "#6C7086"
 padding = 1
 margin = 0
 alignment = "left"
+compact = false
 show_separators = true
-separator_style = "dash"
-
-[customization]
-color_scheme = "default"
-font_size = 12
-alignment = "left"
+separator_symbol = ":"
 
 [colors]
-# Modern Dracula-inspired palette with Nord accents
-OS = "#FF79C6"
-Username = "#50FA7B"
-Hostname = "#F1FA8C"
-"Desktop Environment" = "#BD93F9"
-Memory = "#8BE9FD"
-Disk = "#FF5555"
-"CPU Model" = "#6272A4"
-"GPU Model" = "#FFB86C"
-"Kernel Version" = "#44475A"
-"Display Server" = "#A4FFFF"
-Uptime = "#FF92DF"
+# Specific color overrides per information key
+OS = "#CBA6F7"
+Host = "#89B4FA"
+Kernel = "#F38BA8"
+Uptime = "#FAB387"
+Packages = "#F9E2AF"
+Shell = "#A6E3A1"
+DE = "#94E2D5"
+WM = "#89DCEB"
+Terminal = "#74C7EC"
+CPU = "#89B4FA"
+GPU = "#B4BEFE"
+Memory = "#A6E3A1"
+Disk = "#F38BA8"
+Battery = "#A6E3A1"
 
 [symbols]
-OS = "\U0001f5a5\ufe0f"
-Username = "\U0001f464"
-Hostname = "\U0001f4e1"
-"Desktop Environment" = "\U0001f320"
-Memory = "\U0001f4be"
-Disk = "\U0001f4c2"
-"CPU Model" = "\U0001f9ea"
-"GPU Model" = "\U0001f5a8\ufe0f"
-"Kernel Version" = "\U0001f4bb"
-"Display Server" = "\U0001f5b1\ufe0f"
-Uptime = "\U000023F0"
+# Icons / symbols prefixing each field
+OS = ""
+Host = "󰌢"
+Kernel = ""
+Uptime = "󰅐"
+Packages = "󰏖"
+Shell = ""
+DE = "󰧨"
+WM = ""
+Terminal = ""
+CPU = ""
+GPU = "󰢮"
+Memory = "󰍛"
+Disk = "󰋊"
+Battery = "󰁹"
+

@@ -1,62 +1,84 @@
 layout = "default"
 
 [output]
-show_os = true
-show_cpu = true
-show_memory = true
-show_disk = true
-show_uptime = true
-show_cpu_model = true
-show_gpu_model = true
-show_kernel_version = true
-show_display_server = true
-show_desktop_environment = true
-show_username = true
-show_hostname = true
-show_disks = true
-
 info_keys = [
     "OS",
-    "Kernel Version",
-    "Desktop Environment",
-    "Display Server",
+    "Host",
+    "Kernel",
     "Uptime",
-    "CPU Model",
+    "Packages",
+    "Shell",
+    "DE",
+    "WM",
+    "Terminal",
+    "CPU",
+    "GPU",
     "Memory",
-    "GPU Model",
-    "Username",
-    "Hostname",
-    "Disks"
+    "Disk",
+    "Battery",
 ]
 
-[customization]
-color_scheme = "dark"
-font_size = 12
+show_logo = true
+logo_position = "left"
+logo_size = "medium"
+logo_style = "ascii"
+show_title = true
+show_title_separator = true
+show_color_blocks = true
+color_blocks_style = "circle"
+
+[logo]
+enabled = true
+distro = "auto"
+padding = 2
 alignment = "left"
 
+[theme]
+name = "one-dark"
+primary_color = "#61AFEF"
+secondary_color = "#98C379"
+accent_color = "#E5C07B"
+text_color = "#ABB2BF"
+
+[display]
+border = false
+border_style = "rounded"
+border_color = "#5C6370"
+padding = 1
+margin = 0
+compact = false
+show_separators = true
+separator_symbol = ":"
+
 [colors]
-# Dark Modern Palette - Elegant and Professional
-OS = "#E06C75"  # Soft Red
-Username = "#98C379"  # Soft Green
-Hostname = "#E5C07B"  # Soft Yellow
-"Desktop Environment" = "#C678DD"  # Soft Purple
-Memory = "#56B6C2"  # Soft Cyan
-Disks = "#FF6B6B"  # Bright Red
-"CPU Model" = "#61AFEF"  # Soft Blue
-"GPU Model" = "#FFA07A"  # Light Salmon
-"Kernel Version" = "#ABB2BF"  # Light Grey
-"Display Server" = "#4ECDC4"  # Turquoise
-Uptime = "#F8BBD9"  # Light Pink
+OS = "#E06C75"
+Host = "#61AFEF"
+Kernel = "#ABB2BF"
+Uptime = "#F8BBD9"
+Packages = "#98C379"
+Shell = "#56B6C2"
+DE = "#C678DD"
+WM = "#61AFEF"
+Terminal = "#98C379"
+CPU = "#61AFEF"
+GPU = "#FFA07A"
+Memory = "#56B6C2"
+Disk = "#FF6B6B"
+Battery = "#98C379"
 
 [symbols]
-OS = "\U0001f5a5\ufe0f"
-Username = "\U0001f464"
-Hostname = "\U0001f4e1"
-"Desktop Environment" = "\U0001f320"
-Memory = "\U0001f4be"
-Disks = "\U0001f4c2"
-"CPU Model" = "\U0001f9ea"
-"GPU Model" = "\U0001f5a8\ufe0f"
-"Kernel Version" = "\U0001f4bb"
-"Display Server" = "\U0001f5b1\ufe0f"
-Uptime = "\U000023F0"
+OS = ""
+Host = "󰌢"
+Kernel = ""
+Uptime = "󰅐"
+Packages = "󰏖"
+Shell = ""
+DE = "󰧨"
+WM = ""
+Terminal = ""
+CPU = ""
+GPU = "󰢮"
+Memory = "󰍛"
+Disk = "󰋊"
+Battery = "󰁹"
+

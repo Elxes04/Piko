@@ -1,38 +1,31 @@
 layout = "bordered"
 
 [output]
-show_os = true
-show_cpu = true
-show_memory = true
-show_disk = true
-show_uptime = true
-show_cpu_model = true
-show_gpu_model = true
-show_kernel_version = true
-show_display_server = true
-show_desktop_environment = true
-show_username = true
-show_hostname = true
-
-# Logo configuration
-show_logo = true
-logo_position = "left"
-logo_size = "large"
-logo_style = "ascii"
-
 info_keys = [
     "OS",
-    "Kernel Version",
-    "Desktop Environment",
-    "Display Server",
+    "Host",
+    "Kernel",
     "Uptime",
-    "CPU Model",
+    "Packages",
+    "Shell",
+    "DE",
+    "WM",
+    "Terminal",
+    "CPU",
+    "GPU",
     "Memory",
-    "GPU Model",
-    "Username",
-    "Hostname",
-    "Disk"
+    "Disk",
+    "Battery",
 ]
+
+show_logo = true
+logo_position = "left"
+logo_size = "medium"
+logo_style = "ascii"
+show_title = true
+show_title_separator = true
+show_color_blocks = true
+color_blocks_style = "block"
 
 [logo]
 enabled = true
@@ -41,43 +34,50 @@ padding = 3
 alignment = "left"
 
 [theme]
-name = "bordered"
-primary_color = "#FF6B6B"
-secondary_color = "#4ECDC4"
-accent_color = "#45B7D1"
+name = "nord"
+primary_color = "#88C0D0"
+secondary_color = "#81A1C1"
+accent_color = "#A3BE8C"
 
 [display]
 border = true
 border_style = "double"
-border_color = "#FF6B6B"
+border_color = "#88C0D0"
 padding = 2
 margin = 1
 compact = false
 show_separators = true
-separator_style = "equals"
+separator_symbol = ":"
 
 [colors]
-OS = "#FF6B6B"
-Username = "#4ECDC4"
-Hostname = "#45B7D1"
-"Desktop Environment" = "#96CEB4"
-Memory = "#FFEAA7"
-Disk = "#DDA0DD"
-"CPU Model" = "#98D8C8"
-"GPU Model" = "#F7DC6F"
-"Kernel Version" = "#BB8FCE"
-"Display Server" = "#85C1E9"
-Uptime = "#F8C471"
+OS = "#88C0D0"
+Host = "#81A1C1"
+Kernel = "#BF616A"
+Uptime = "#EBCB8B"
+Packages = "#A3BE8C"
+Shell = "#B48EAD"
+DE = "#8FBCBB"
+WM = "#88C0D0"
+Terminal = "#81A1C1"
+CPU = "#88C0D0"
+GPU = "#81A1C1"
+Memory = "#A3BE8C"
+Disk = "#D08770"
+Battery = "#A3BE8C"
 
 [symbols]
-OS = "🖥️"
-Username = "👤"
-Hostname = "🏠"
-"Desktop Environment" = "🖼️"
-Memory = "💾"
-Disk = "💿"
-"CPU Model" = "⚡"
-"GPU Model" = "🎮"
-"Kernel Version" = "🔧"
-"Display Server" = "🖥️"
-Uptime = "⏰"
+OS = ""
+Host = "󰌢"
+Kernel = ""
+Uptime = "󰅐"
+Packages = "󰏖"
+Shell = ""
+DE = "󰧨"
+WM = ""
+Terminal = ""
+CPU = ""
+GPU = "󰢮"
+Memory = "󰍛"
+Disk = "󰋊"
+Battery = "󰁹"
+

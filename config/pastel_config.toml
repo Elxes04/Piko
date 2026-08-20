@@ -1,62 +1,84 @@
 layout = "default"
 
 [output]
-show_os = true
-show_cpu = true
-show_memory = true
-show_disk = true
-show_uptime = true
-show_cpu_model = true
-show_gpu_model = true
-show_kernel_version = true
-show_display_server = true
-show_desktop_environment = true
-show_username = true
-show_hostname = true
-show_disks = true
-
 info_keys = [
     "OS",
-    "Kernel Version",
-    "Desktop Environment",
-    "Display Server",
+    "Host",
+    "Kernel",
     "Uptime",
-    "CPU Model",
+    "Packages",
+    "Shell",
+    "DE",
+    "WM",
+    "Terminal",
+    "CPU",
+    "GPU",
     "Memory",
-    "GPU Model",
-    "Username",
-    "Hostname",
-    "Disks"
+    "Disk",
+    "Battery",
 ]
 
-[customization]
-color_scheme = "pastel"
-font_size = 12
+show_logo = true
+logo_position = "left"
+logo_size = "medium"
+logo_style = "ascii"
+show_title = true
+show_title_separator = true
+show_color_blocks = true
+color_blocks_style = "circle"
+
+[logo]
+enabled = true
+distro = "auto"
+padding = 2
 alignment = "left"
 
+[theme]
+name = "catppuccin-latte"
+primary_color = "#8839EF"
+secondary_color = "#1E66F5"
+accent_color = "#40A02B"
+text_color = "#4C4F69"
+
+[display]
+border = false
+border_style = "rounded"
+border_color = "#9CA0B0"
+padding = 1
+margin = 0
+compact = false
+show_separators = true
+separator_symbol = ":"
+
 [colors]
-# Modern Pastel Palette - Soft and Elegant
-OS = "#FFB3BA"  # Soft Pink
-Username = "#BAFFC9"  # Soft Mint
-Hostname = "#FFFFBA"  # Soft Yellow
-"Desktop Environment" = "#E8BAFF"  # Soft Lavender
-Memory = "#BAE1FF"  # Soft Blue
-Disks = "#FFB3D9"  # Soft Rose
-"CPU Model" = "#B8E6B8"  # Soft Sage
-"GPU Model" = "#FFD4B3"  # Soft Peach
-"Kernel Version" = "#D4D4D4"  # Soft Grey
-"Display Server" = "#B3E6FF"  # Soft Sky Blue
-Uptime = "#FFE6B3"  # Soft Cream
+OS = "#FFB3BA"
+Host = "#1E66F5"
+Kernel = "#D4D4D4"
+Uptime = "#FFE6B3"
+Packages = "#40A02B"
+Shell = "#179299"
+DE = "#8839EF"
+WM = "#1E66F5"
+Terminal = "#40A02B"
+CPU = "#B8E6B8"
+GPU = "#FFD4B3"
+Memory = "#BAE1FF"
+Disk = "#FFB3D9"
+Battery = "#BAFFC9"
 
 [symbols]
-OS = "\U0001f5a5\ufe0f"
-Username = "\U0001f464"
-Hostname = "\U0001f4e1"
-"Desktop Environment" = "\U0001f320"
-Memory = "\U0001f4be"
-Disks = "\U0001f4c2"
-"CPU Model" = "\U0001f9ea"
-"GPU Model" = "\U0001f5a8\ufe0f"
-"Kernel Version" = "\U0001f4bb"
-"Display Server" = "\U0001f5b1\ufe0f"
-Uptime = "\U000023F0"
+OS = ""
+Host = "󰌢"
+Kernel = ""
+Uptime = "󰅐"
+Packages = "󰏖"
+Shell = ""
+DE = "󰧨"
+WM = ""
+Terminal = ""
+CPU = ""
+GPU = "󰢮"
+Memory = "󰍛"
+Disk = "󰋊"
+Battery = "󰁹"
+
