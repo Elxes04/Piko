@@ -1,31 +1,31 @@
 #!/bin/bash
 
 # Piko Installation Script
-# This script installs Piko system information tool
+# This script builds and installs Piko
 
 set -e
 
-echo "🐧 Installing Piko - System Information Tool"
-echo "=============================================="
+echo "Installing Piko..."
+echo "=================="
 
 # Detect environment
 if [ -n "$TERMUX_VERSION" ] || [[ "$PREFIX" == *"/data/data/com.termux"* ]]; then
-    echo "📱 Detected Termux environment"
+    echo "Detected Termux environment"
     IS_TERMUX=true
     USE_SUDO=false
 elif command -v sudo &> /dev/null; then
-    echo "🔐 Sudo available - will use for system-wide installation"
+    echo "Sudo available - installing system-wide"
     IS_TERMUX=false
     USE_SUDO=true
 else
-    echo "⚠️  Sudo not available - will install to user directory"
+    echo "Sudo not available - installing to user directory"
     IS_TERMUX=false
     USE_SUDO=false
 fi
 
 # Check if Rust is installed
 if ! command -v cargo &> /dev/null; then
-    echo "❌ Rust is not installed. Please install Rust first:"
+    echo "Error: Rust/Cargo is not installed. Please install Rust first:"
     if [ "$IS_TERMUX" = true ]; then
         echo "   pkg install rust"
     else
@@ -34,34 +34,28 @@ if ! command -v cargo &> /dev/null; then
     exit 1
 fi
 
-echo "✅ Rust is installed"
+echo "Rust toolchain detected."
 
 # Build the project
-echo "🔨 Building Piko..."
+echo "Building Piko (release mode)..."
 cargo build --release
 
 # Set installation paths based on environment
 if [ "$IS_TERMUX" = true ]; then
-    # Termux: install to user directory
     BIN_DIR="$HOME/.local/bin"
     CONFIG_DIR="$HOME/.config/piko"
-    echo "📁 Installing to Termux user directory"
 else
     if [ "$USE_SUDO" = true ]; then
-        # System-wide installation with sudo
         BIN_DIR="/usr/local/bin"
         CONFIG_DIR="/etc/piko"
-        echo "📁 Installing system-wide"
     else
-        # User directory installation without sudo
         BIN_DIR="$HOME/.local/bin"
         CONFIG_DIR="$HOME/.config/piko"
-        echo "📁 Installing to user directory"
     fi
 fi
 
 # Create installation directories
-echo "📁 Creating installation directories..."
+echo "Creating directories..."
 if [ "$USE_SUDO" = true ]; then
     sudo mkdir -p "$BIN_DIR"
     sudo mkdir -p "$CONFIG_DIR"
@@ -71,7 +65,7 @@ else
 fi
 
 # Copy binary
-echo "📦 Installing Piko binary..."
+echo "Installing binary to $BIN_DIR/piko..."
 if [ "$USE_SUDO" = true ]; then
     sudo cp target/release/piko "$BIN_DIR/"
     sudo chmod +x "$BIN_DIR/piko"
@@ -81,7 +75,7 @@ else
 fi
 
 # Copy configuration files
-echo "⚙️ Installing configuration files..."
+echo "Installing sample configuration files..."
 if [ "$USE_SUDO" = true ]; then
     sudo cp config/default_config.toml "$CONFIG_DIR/"
     sudo cp config/compact_config.toml "$CONFIG_DIR/"
@@ -95,60 +89,22 @@ else
 fi
 
 # Add to PATH if not already there
-if [ "$IS_TERMUX" = true ]; then
-    # For Termux, add to .bashrc if not present
+if [ "$IS_TERMUX" = true ] || [ "$USE_SUDO" = false ]; then
     if ! grep -q "$BIN_DIR" "$HOME/.bashrc" 2>/dev/null; then
         echo "" >> "$HOME/.bashrc"
         echo "# Add Piko to PATH" >> "$HOME/.bashrc"
         echo "export PATH=\"\$PATH:$BIN_DIR\"" >> "$HOME/.bashrc"
-        echo "📝 Added Piko to PATH in ~/.bashrc"
-        echo "   Please restart your terminal or run: source ~/.bashrc"
-    fi
-elif [ "$USE_SUDO" = false ]; then
-    # For user installation, add to .bashrc if not present
-    if ! grep -q "$BIN_DIR" "$HOME/.bashrc" 2>/dev/null; then
-        echo "" >> "$HOME/.bashrc"
-        echo "# Add Piko to PATH" >> "$HOME/.bashrc"
-        echo "export PATH=\"\$PATH:$BIN_DIR\"" >> "$HOME/.bashrc"
-        echo "📝 Added Piko to PATH in ~/.bashrc"
-        echo "   Please restart your terminal or run: source ~/.bashrc"
+        echo "Added $BIN_DIR to PATH in ~/.bashrc"
     fi
 fi
 
 echo ""
-echo "✅ Installation completed successfully!"
+echo "Installation complete!"
 echo ""
-
-if [ "$IS_TERMUX" = true ]; then
-    echo "📱 Termux Installation Details:"
-    echo "   Binary: $BIN_DIR/piko"
-    echo "   Config: $CONFIG_DIR/"
-    echo "   PATH updated in ~/.bashrc"
-    echo "   Termux config: $CONFIG_DIR/termux_config.toml"
-elif [ "$USE_SUDO" = false ]; then
-    echo "👤 User Installation Details:"
-    echo "   Binary: $BIN_DIR/piko"
-    echo "   Config: $CONFIG_DIR/"
-    echo "   PATH updated in ~/.bashrc"
-else
-    echo "🔐 System Installation Details:"
-    echo "   Binary: $BIN_DIR/piko"
-    echo "   Config: $CONFIG_DIR/"
-fi
-
+echo "Usage:"
+echo "  piko                    # Run with defaults"
+echo "  piko --theme nord       # Choose a theme"
+echo "  piko --border           # Wrap in a border"
+echo "  piko --format json      # Output JSON"
+echo "  piko --help             # View all options"
 echo ""
-echo "Usage examples:"
-echo "  piko                    # Show system information with default settings"
-echo "  piko --logo-only        # Show only the distribution logo"
-echo "  piko --logo-size small  # Use smaller logo"
-echo "  piko --border           # Add border around output"
-echo "  piko --format json      # Output in JSON format"
-echo "  piko --help             # Show all available options"
-echo ""
-
-if [ "$IS_TERMUX" = true ]; then
-    echo "🐧 Enjoy using Piko on Termux!"
-    echo "   Note: Some system information may be limited due to Android restrictions"
-else
-    echo "🐧 Enjoy using Piko!"
-fi

@@ -1,322 +1,187 @@
 Configuration Guide
-==================
+===================
 
-Piko is highly customizable through TOML configuration files. This guide covers all configuration options and how to use them effectively.
+Piko uses TOML for configuration. It runs with zero configuration by default using embedded settings, but can be fully customized with a local configuration file.
 
-Configuration File Locations
----------------------------
+Configuration Resolution Order
+------------------------------
 
-Piko looks for configuration files in the following order:
+Piko resolves configuration files in the following order:
 
-1. **Custom path** (specified with `--config`)
-2. **System configuration** (`/etc/piko/default_config.toml`)
-3. **User configuration** (`~/.config/piko/default_config.toml` on macOS)
+1. Path supplied to the ``--config <path>`` command-line flag
+2. Path defined in the ``PIKO_CONFIG`` environment variable
+3. User configuration file: ``~/.config/piko/config.toml``
+4. System-wide configuration file: ``/etc/piko/config.toml``
+5. Built-in embedded default configuration
 
-Basic Configuration Structure
-----------------------------
+Generating a Default Configuration
+----------------------------------
 
-A Piko configuration file has the following structure:
-
-.. code-block:: toml
-
-    # Main layout configuration
-    layout = "default"
-    
-    [output]
-    # Output display settings
-    
-    [logo]
-    # Logo configuration
-    
-    [theme]
-    # Theme and color settings
-    
-    [display]
-    # Display and formatting options
-    
-    [colors]
-    # Individual color overrides
-    
-    [symbols]
-    # Custom symbols for information fields
-
-Output Configuration
--------------------
-
-The `[output]` section controls how information is displayed:
-
-.. code-block:: toml
-
-    [output]
-    # Logo settings
-    show_logo = true
-    logo_position = "left"      # left, right, top, bottom
-    logo_size = "medium"        # small, medium, large
-    logo_style = "ascii"        # ascii, unicode, minimal
-    
-    # Information fields to display
-    info_keys = [
-        "OS",
-        "Kernel Version",
-        "Desktop Environment",
-        "Display Server",
-        "Uptime",
-        "CPU Model",
-        "Memory",
-        "GPU Model",
-        "Username",
-        "Hostname",
-        "Disk"
-    ]
-    
-    # Show/hide specific fields
-    show_os = true
-    show_cpu = true
-    show_memory = true
-    show_disk = true
-    show_uptime = true
-    show_cpu_model = true
-    show_gpu_model = true
-    show_kernel_version = true
-    show_display_server = true
-    show_desktop_environment = true
-    show_username = true
-    show_hostname = true
-
-Logo Configuration
------------------
-
-The `[logo]` section controls the distribution logo display:
-
-.. code-block:: toml
-
-    [logo]
-    enabled = true
-    distro = "auto"             # auto, arch, ubuntu, debian, fedora, etc.
-    padding = 2                  # Space between logo and info
-    alignment = "left"           # left, center, right
-    
-    # Custom ASCII art (optional)
-    custom_ascii = [
-        "  _____",
-        " /  ___|",
-        "|  |  __",
-        "|  | |_ |",
-        "|  |__| |",
-        " \\_____|"
-    ]
-    
-    # Custom colors for ASCII art (optional)
-    custom_colors = ["#D70A53"]
-
-Theme Configuration
-------------------
-
-The `[theme]` section defines color schemes:
-
-.. code-block:: toml
-
-    [theme]
-    name = "default"             # default, dracula, nord, gruvbox, custom
-    primary_color = "#FF79C6"    # Main accent color
-    secondary_color = "#50FA7B"  # Secondary accent color
-    accent_color = "#BD93F9"     # Highlight color
-    background_color = ""        # Background color (empty for transparent)
-    text_color = "#F8F8F2"      # Default text color
-
-Display Configuration
---------------------
-
-The `[display]` section controls visual formatting:
-
-.. code-block:: toml
-
-    [display]
-    # Border settings
-    border = false
-    border_style = "single"      # single, double, rounded, none
-    border_color = "#6272A4"
-    
-    # Spacing
-    padding = 1                  # Internal padding
-    margin = 0                   # External margin
-    
-    # Layout
-    alignment = "left"           # left, center, right
-    show_separators = true       # Show separators between info lines
-    separator_style = "dash"     # dash, equals, dots, none
-
-Color Configuration
-------------------
-
-The `[colors]` section allows fine-grained color control:
-
-.. code-block:: toml
-
-    [colors]
-    # System information colors
-    OS = "#FF79C6"               # Pink
-    Username = "#50FA7B"         # Green
-    Hostname = "#F1FA8C"         # Yellow
-    "Desktop Environment" = "#BD93F9"  # Purple
-    Memory = "#8BE9FD"           # Cyan
-    Disk = "#FF5555"             # Red
-    "CPU Model" = "#6272A4"      # Blue-grey
-    "GPU Model" = "#FFB86C"      # Orange
-    "Kernel Version" = "#44475A" # Dark grey
-    "Display Server" = "#A4FFFF" # Light cyan
-    Uptime = "#FF92DF"           # Light pink
-
-Symbol Configuration
--------------------
-
-The `[symbols]` section defines custom symbols for information fields:
-
-.. code-block:: toml
-
-    [symbols]
-    OS = "🖥️"
-    Username = "👤"
-    Hostname = "🏠"
-    "Desktop Environment" = "🌠"
-    Memory = "💾"
-    Disk = "📂"
-    "CPU Model" = "🧪"
-    "GPU Model" = "🖨️"
-    "Kernel Version" = "💻"
-    "Display Server" = "🖱️"
-    Uptime = "⏰"
-
-Predefined Themes
------------------
-
-Piko comes with several built-in themes:
-
-**Default Theme (Dracula-inspired):**
-- Primary: Pink (#FF79C6)
-- Secondary: Green (#50FA7B)
-- Accent: Purple (#BD93F9)
-
-**Compact Theme:**
-- Primary: Teal (#4ECDC4)
-- Secondary: Blue (#45B7D1)
-- Accent: Green (#96CEB4)
-
-**Border Theme:**
-- Primary: Red (#FF6B6B)
-- Secondary: Teal (#4ECDC4)
-- Accent: Blue (#45B7D1)
-
-Creating Custom Themes
----------------------
-
-To create a custom theme:
-
-1. **Copy an existing theme file:**
-   .. code-block:: bash
-
-       cp /etc/piko/default_config.toml ~/my_theme.toml
-
-2. **Modify colors and settings:**
-   .. code-block:: toml
-
-       [theme]
-       name = "my_custom_theme"
-       primary_color = "#FF6B6B"
-       secondary_color = "#4ECDC4"
-       accent_color = "#45B7D1"
-
-3. **Use your custom theme:**
-   .. code-block:: bash
-
-       piko --config ~/my_theme.toml
-
-Configuration Examples
----------------------
-
-**Minimal Configuration:**
-.. code-block:: toml
-
-    [output]
-    logo_size = "small"
-    logo_style = "minimal"
-    
-    [display]
-    show_separators = false
-    padding = 0
-
-**Professional Configuration:**
-.. code-block:: toml
-
-    [display]
-    border = true
-    border_style = "double"
-    border_color = "#FF6B6B"
-    padding = 2
-    
-    [output]
-    logo_size = "large"
-    logo_style = "ascii"
-
-**Colorful Configuration:**
-.. code-block:: toml
-
-    [theme]
-    name = "vibrant"
-    primary_color = "#FF6B6B"
-    secondary_color = "#4ECDC4"
-    accent_color = "#45B7D1"
-    
-    [colors]
-    OS = "#FF6B6B"
-    Username = "#4ECDC4"
-    Hostname = "#45B7D1"
-
-Environment Variables
---------------------
-
-You can override configuration with environment variables:
+You can generate a starter configuration file at ``~/.config/piko/config.toml``:
 
 .. code-block:: bash
 
-    export PIKO_CONFIG_PATH="/path/to/config.toml"
-    export PIKO_LOGO_SIZE="large"
-    export PIKO_SHOW_BORDER="true"
+    piko --gen-config
 
-Configuration Validation
------------------------
+Or print the embedded default configuration to stdout:
 
-Piko validates configuration files and will show errors for invalid TOML syntax. Common issues:
+.. code-block:: bash
 
-- **Inline comments:** TOML doesn't support `#` on the same line as values
-- **Missing quotes:** Use quotes for strings with spaces
-- **Invalid colors:** Ensure hex colors are valid (e.g., `#FF0000`)
+    piko --print-config
 
-Best Practices
---------------
+Configuration File Structure
+----------------------------
 
-1. **Backup configurations:** Keep backups of working configurations
-2. **Test changes:** Test configuration changes before applying to production
-3. **Use version control:** Track configuration changes in git
-4. **Document customizations:** Add comments to explain custom settings
-5. **Share themes:** Share your custom themes with the community
+.. code-block:: toml
 
-Troubleshooting
+    layout = "default"
+
+    [output]
+    # List of fields to display, in order
+    info_keys = [
+        "OS",
+        "Host",
+        "Kernel",
+        "Uptime",
+        "Packages",
+        "Shell",
+        "DE",
+        "WM",
+        "Terminal",
+        "CPU",
+        "GPU",
+        "Memory",
+        "Disk",
+        "Battery",
+    ]
+
+    # Logo settings
+    show_logo = true
+    logo_position = "left"          # "left", "right", "top", "bottom"
+    logo_size = "medium"            # "small", "medium", "large"
+    logo_style = "ascii"            # "ascii", "unicode", "minimal"
+
+    # Header and palette settings
+    show_title = true               # user@hostname header
+    show_title_separator = true     # underline delimiter
+    show_color_blocks = true        # color palette blocks
+    color_blocks_style = "circle"   # "circle" (●) or "block" (█)
+
+    [logo]
+    enabled = true
+    distro = "auto"                 # "auto" or specific distro name (e.g. "arch", "nixos")
+    padding = 2
+    alignment = "left"
+
+    [theme]
+    name = "catppuccin"
+    primary_color = "#CBA6F7"
+    secondary_color = "#89B4FA"
+    accent_color = "#A6E3A1"
+    text_color = "#CDD6F4"
+
+    [display]
+    border = false
+    border_style = "rounded"        # "single", "double", "rounded", "bold", "none"
+    border_color = "#6C7086"
+    padding = 1
+    margin = 0
+    alignment = "left"
+    compact = false
+    show_separators = true
+    separator_symbol = ":"
+
+    [colors]
+    OS = "#CBA6F7"
+    Host = "#89B4FA"
+    Kernel = "#F38BA8"
+    Uptime = "#FAB387"
+    Packages = "#F9E2AF"
+    Shell = "#A6E3A1"
+    DE = "#94E2D5"
+    WM = "#89DCEB"
+    Terminal = "#74C7EC"
+    CPU = "#89B4FA"
+    GPU = "#B4BEFE"
+    Memory = "#A6E3A1"
+    Disk = "#F38BA8"
+    Battery = "#A6E3A1"
+
+    [symbols]
+    OS = ""
+    Host = "󰌢"
+    Kernel = ""
+    Uptime = "󰅐"
+    Packages = "󰏖"
+    Shell = ""
+    DE = "󰧨"
+    WM = ""
+    Terminal = ""
+    CPU = ""
+    GPU = "󰢮"
+    Memory = "󰍛"
+    Disk = "󰋊"
+    Battery = "󰁹"
+
+Supported Information Keys
+--------------------------
+
+The ``info_keys`` array supports any combination of the following identifiers:
+
+- ``"OS"``: Distribution name, version release, and architecture
+- ``"Host"``: Hardware / laptop model (e.g. ThinkPad X380 Yoga)
+- ``"Kernel"``: Operating system kernel release
+- ``"Uptime"``: System uptime formatted in days, hours, and minutes
+- ``"Packages"``: Count of installed packages across detected package managers
+- ``"Shell"``: Active shell name and version
+- ``"DE"``: Desktop Environment (e.g. GNOME, KDE Plasma, XFCE)
+- ``"WM"``: Window Manager or Wayland compositor (e.g. niri, Hyprland, Sway, i3)
+- ``"Terminal"``: Detected terminal emulator
+- ``"CPU"``: Processor model, core count, and frequency
+- ``"GPU"``: Graphics card / controller
+- ``"Memory"``: Used and total RAM with usage percentage
+- ``"Disk"``: Deduplicated physical mount points and usage
+- ``"Battery"``: Battery charge percentage and charging status
+
+Built-in Themes
 ---------------
 
-**Configuration not loading:**
-- Check file permissions: `ls -la /etc/piko/`
-- Verify TOML syntax: `toml-validate config.toml`
-- Check file path: `piko --config /path/to/config.toml`
+You can select a built-in theme by name in your config or via ``piko --theme <name>``:
 
-**Colors not working:**
-- Ensure terminal supports true color
-- Check hex color format: `#RRGGBB`
-- Verify color names are correct
+- ``catppuccin`` (Mocha)
+- ``catppuccin-latte``
+- ``dracula``
+- ``nord``
+- ``gruvbox``
+- ``tokyo-night``
+- ``one-dark``
+- ``solarized``
+- ``rose-pine``
+- ``synthwave``
 
-**Logo not displaying:**
-- Check `show_logo = true` in output section
-- Verify logo is enabled: `[logo] enabled = true`
-- Test with `piko --logo-only`
+Border Styles
+-------------
 
-For more advanced configuration options, see the :doc:`advanced_features` guide.
+The ``display.border_style`` option supports:
+
+- ``"single"``: Clean single-line box drawing (┌─┐)
+- ``"double"``: Double-line box drawing (╔═╗)
+- ``"rounded"``: Smooth rounded corners (╭─╮)
+- ``"bold"``: Heavy-line box drawing (┏━┓)
+- ``"none"``: Space boundary without box characters
+
+Exporting and Importing
+-----------------------
+
+Export the active configuration (including any CLI overrides applied):
+
+.. code-block:: bash
+
+    piko --theme nord --border --export-config ~/nord_theme.toml
+
+Load a custom configuration file:
+
+.. code-block:: bash
+
+    piko --config ~/nord_theme.toml
+

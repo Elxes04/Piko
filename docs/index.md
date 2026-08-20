@@ -1,6 +1,6 @@
 # Piko Documentation
 
-Welcome to the Piko documentation! Piko is a minimal, customizable system information tool written in Rust — inspired by Neofetch. This documentation will guide you through the installation process, usage instructions, and configuration options available for the program.
+Piko is a lightweight system information tool written in Rust, inspired by Neofetch.
 
 ```{toctree}
 :maxdepth: 2
@@ -13,26 +13,21 @@ usage
 
 ## Overview
 
-Piko aims to provide a simple and efficient way to gather and display system information. Whether you're a developer, system administrator, or just a curious user, Piko can help you quickly access important details about your system.
+Piko queries system information directly from the kernel interfaces and displays formatted output alongside distribution ASCII art.
 
-**Key Features:**
+Features:
 
-- 📦 Operating System details - OS name, version, and architecture
-- 🧠 CPU specifications - Model, cores, and performance info
-- 💾 Memory usage - RAM usage with percentage and total capacity
-- 🗃️ Disk usage - Storage information and space utilization
-- ⏰ System uptime - How long the system has been running
-- 🖥️ GPU information - Graphics card details and drivers
-- 🎨 Multiple color schemes - Pre-made themes and custom colors
-- 🐧 Cross-platform - Linux & macOS support
-- ⚡ Fast and lightweight - Written in Rust for optimal performance
+- Fast startup (<10ms) using direct procfs/sysfs parsers
+- Zero-config execution with embedded defaults
+- 10 built-in color themes
+- 230+ distribution ASCII logos with authentic Neofetch color palettes and small variants
+- Detailed system metrics: OS, Host/Model, Kernel, Uptime, Packages (11 package managers), Shell, DE, WM, Terminal, CPU, GPU, Memory, Disks, and Battery
+- Terminal color blocks palette
+- Border formatting (single, double, rounded, bold)
+- Normal ANSI, JSON, and YAML output formats
 
-## Getting Started
+## Sections
 
-To get started with Piko, please refer to the [Installation](installation.md) section for detailed instructions on how to install the program on your system.
-
-For information on how to use Piko and its features, check out the [Usage](usage.md) section.
-
-If you need to customize Piko's behavior, the [Configuration](configuration.md) section will provide you with all the necessary details on available options and settings.
-
-Happy exploring!
+- [Installation](installation.rst) - Building from source, Cargo, and package managers
+- [Configuration](configuration.rst) - Customizing info fields, themes, borders, and colors
+- [Usage](usage.rst) - Command-line flags, options, and practical examples

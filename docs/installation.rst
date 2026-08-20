@@ -1,205 +1,92 @@
 Installation Guide
-=================
+==================
 
-This guide covers how to install Piko on different systems and platforms.
+This guide covers how to install Piko on Linux, macOS, and Termux.
 
 Prerequisites
-------------
+-------------
 
-**Rust Programming Language**
-Piko is written in Rust and requires Rust 1.75+ to build from source.
+Piko is written in Rust and requires a working Rust toolchain (Cargo and Rustc 1.75+).
 
-To install Rust, visit `https://rustup.rs/` or run:
+If you do not have Rust installed:
 
 .. code-block:: bash
 
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-After installation, restart your terminal or run:
-
-.. code-block:: bash
-
     source "$HOME/.cargo/env"
 
-Installation Methods
--------------------
+Building from Source
+--------------------
 
-From Source (Recommended)
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. **Clone the repository:**
+1. Clone the repository:
 
    .. code-block:: bash
 
        git clone https://github.com/Elxes04/piko.git
        cd piko
 
-2. **Run the installation script:**
+2. Build and install with Cargo:
+
+   .. code-block:: bash
+
+       cargo build --release
+       sudo cp target/release/piko /usr/local/bin/
+
+   Alternatively, install directly to your Cargo bin directory:
+
+   .. code-block:: bash
+
+       cargo install --path .
+
+3. Or run the install script:
 
    .. code-block:: bash
 
        ./install.sh
 
-   This script will:
-   - Build Piko from source
-   - Install the binary to `/usr/local/bin/`
-   - Install configuration files to `/etc/piko/`
-   - Set appropriate permissions
+Install via Cargo
+-----------------
 
-3. **Verify installation:**
-
-   .. code-block:: bash
-
-       piko --version
-
-Manual Installation
-~~~~~~~~~~~~~~~~~~
-
-If you prefer manual installation:
-
-1. **Build the project:**
-
-   .. code-block:: bash
-
-       cargo build --release
-
-2. **Install binary:**
-
-   .. code-block:: bash
-
-       sudo cp target/release/piko /usr/local/bin/
-
-3. **Create configuration directory:**
-
-   .. code-block:: bash
-
-       sudo mkdir -p /etc/piko
-
-4. **Install configuration files:**
-
-   .. code-block:: bash
-
-       sudo cp config/default_config.toml /etc/piko/
-       sudo cp config/compact_config.toml /etc/piko/
-       sudo cp config/border_config.toml /etc/piko/
-
-From Cargo
-~~~~~~~~~~
-
-Install directly from Cargo registry:
+If installing from crates.io:
 
 .. code-block:: bash
 
     cargo install piko
 
-**Note:** When installing from Cargo, you'll need to manually copy configuration files or create your own.
+Configuration Setup (Optional)
+------------------------------
 
-Package Managers
-~~~~~~~~~~~~~~~
-
-**Arch Linux (AUR):**
+Piko does not require any external configuration files to run. If you wish to customize fields or color schemes, generate a configuration file in your user directory:
 
 .. code-block:: bash
 
-    yay -S piko
+    piko --gen-config
 
+This creates `~/.config/piko/config.toml` with default settings and explanatory comments.
 
+Verification
+------------
 
-Installation Locations
----------------------
-
-After installation, Piko will be available in the following locations:
-
-- **Binary:** `/usr/local/bin/piko`
-- **System Configuration:** `/etc/piko/`
-- **User Configuration:** `~/.config/piko/` (macOS)
-
-Configuration Files
-------------------
-
-The following configuration files are installed by default:
-
-- **`default_config.toml`** - Default Dracula-inspired theme
-- **`compact_config.toml`** - Compact layout theme
-- **`border_config.toml`** - Bordered output theme
-
-Post-Installation
------------------
-
-1. **Test the installation:**
-
-   .. code-block:: bash
-
-       piko
-
-2. **List available logos:**
-
-   .. code-block:: bash
-
-       piko --list-logos
-
-3. **Show help:**
-
-   .. code-block:: bash
-
-       piko --help
-
-Troubleshooting
---------------
-
-**Permission Denied Errors**
-If you encounter permission errors, ensure the binary is executable:
+Test that Piko is installed and executable:
 
 .. code-block:: bash
 
-    sudo chmod +x /usr/local/bin/piko
-
-**Configuration File Not Found**
-If Piko can't find the configuration file:
-
-1. Verify the file exists: ``ls -la /etc/piko/``
-2. Check file permissions: ``ls -la /etc/piko/default_config.toml``
-3. Ensure the file is readable: ``sudo chmod 644 /etc/piko/default_config.toml``
-
-**Rust Not Found**
-If you get "cargo: command not found":
-
-.. code-block:: bash
-
-    source "$HOME/.cargo/env"
-
-Or restart your terminal after installing Rust.
+    piko --version
+    piko
 
 Uninstallation
 --------------
 
 To remove Piko:
 
-1. **Remove the binary:**
+.. code-block:: bash
 
-   .. code-block:: bash
+    # If installed manually:
+    sudo rm /usr/local/bin/piko
 
-       sudo rm /usr/local/bin/piko
+    # If installed via Cargo:
+    cargo uninstall piko
 
-2. **Remove configuration files (optional):**
+    # Remove user configuration (optional):
+    rm -rf ~/.config/piko
 
-   .. code-block:: bash
-
-       sudo rm -rf /etc/piko
-
-3. **Remove from Cargo (if installed via Cargo):**
-
-   .. code-block:: bash
-
-       cargo uninstall piko
-
-Next Steps
-----------
-
-After installation, you can:
-
-- Read the :doc:`configuration` guide to customize Piko
-- Check the :doc:`usage` guide for command-line options
-- Explore :doc:`advanced_features` for advanced customization
-
-For additional help, please open an issue on the `GitHub repository <https://github.com/Elxes04/piko/issues>`_.

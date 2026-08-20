@@ -1,7 +1,7 @@
-Welcome to Piko's documentation!
-===============================
+Piko Documentation
+==================
 
-Piko is a highly customizable system information tool written in Rust — inspired by Neofetch.
+Piko is a lightweight, customizable system information tool written in Rust, inspired by Neofetch.
 
 .. toctree::
    :maxdepth: 2
@@ -10,60 +10,43 @@ Piko is a highly customizable system information tool written in Rust — inspir
    installation
    configuration
    usage
-   ADVANCED_FEATURES
 
 Features
 --------
 
-- **Automatic Distribution Detection**: Automatically detects and displays your Linux distribution logo
-- **Highly Customizable**: Extensive configuration options for colors, symbols, layout, and more
-- **Multiple Output Formats**: Support for normal, JSON, and YAML output
-- **Logo Support**: Built-in ASCII art logos for popular Linux distributions
-- **Flexible Layout**: Configurable logo position, size, and style
-- **Theme Support**: Multiple color themes and custom color schemes
-- **Export/Import**: Save and load your custom configurations
-- **Border Options**: Add decorative borders around your output
+- Fast execution (<10ms) using direct procfs/sysfs parsers
+- Zero-config execution with embedded defaults
+- 10 built-in color themes
+- 230+ distribution ASCII logos with authentic Neofetch color palettes and small variants
+- Detailed system metrics: OS, Host/Model, Kernel, Uptime, Packages (11 package managers), Shell, DE, WM, Terminal, CPU, GPU, Memory, Disks, and Battery
+- Terminal color blocks palette
+- Border formatting (single, double, rounded, bold)
+- Normal ANSI, JSON, and YAML output formats
 
 Quick Start
 -----------
 
 .. code-block:: bash
 
-   # Show system information with default settings
+   # Display system info using default settings
    piko
 
-   # Show only the distribution logo
-   piko --logo-only
+   # Switch color themes
+   piko --theme nord
 
-   # List all available distribution logos
-   piko --list-logos
+   # Use a small logo with a border
+   piko --distro arch --logo-size small --border
 
-   # Get help
+   # Generate a default configuration file
+   piko --gen-config
+
+   # Print help
    piko --help
 
-Installation
------------
+Documentation Sections
+----------------------
 
-For installation instructions, see the :doc:`installation` guide.
+- :doc:`installation` - How to install Piko
+- :doc:`configuration` - How to configure Piko
+- :doc:`usage` - Command-line options and examples
 
-Configuration
-------------
-
-For configuration options and customization, see the :doc:`configuration` guide.
-
-Usage
------
-
-For command-line options and usage examples, see the :doc:`usage` guide.
-
-Advanced Features
-----------------
-
-For advanced customization, automation, and integration, see the :doc:`ADVANCED_FEATURES` guide.
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

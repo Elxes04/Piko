@@ -1,77 +1,176 @@
-# Piko 🐧
+# piko
 
-A highly customizable system information tool written in Rust — inspired by Neofetch
+A fast, lightweight system information tool written in Rust, inspired by Neofetch.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Crates.io](https://img.shields.io/crates/v/piko)](https://crates.io/crates/piko)
-[![Build Status](https://github.com/Elxes04/piko/workflows/CI/badge.svg)](https://github.com/Elxes04/piko/actions)
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/Elxes04/piko/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/Elxes04/piko/releases)
 
-## Features ✨
+Piko gathers and displays system metrics alongside distribution ASCII art. It is built to start instantly (sub-10ms), requires zero configuration to run, and supports custom layouts and color palettes.
 
-- **Automatic Distribution Detection**: Automatically detects and displays your Linux distribution logo
-- **Highly Customizable**: Extensive configuration options for colors, symbols, layout, and more
-- **Multiple Output Formats**: Support for normal, JSON, and YAML output
-- **Logo Support**: Built-in ASCII art logos for popular Linux distributions
-- **Flexible Layout**: Configurable logo position, size, and style
-- **Theme Support**: Multiple color themes and custom color schemes
-- **Export/Import**: Save and load your custom configurations
-- **Border Options**: Add decorative borders around your output
-- **Termux/Android Support**: Optimized for Android environments with smart partition filtering
+## Features
+
+- Fast execution (<10ms) using direct procfs/sysfs reads
+- Zero configuration required; embedded defaults work out of the box
+- 10 built-in color themes (Catppuccin, Nord, Dracula, Gruvbox, Tokyo Night, One Dark, Solarized, Rose Pine, Synthwave)
+- 230+ distribution ASCII logos imported from Neofetch with authentic multi-color palettes and small variants
+- Comprehensive system info: OS, Host/Model, Kernel, Uptime, Packages (11 package managers), Shell, DE, WM, Terminal, CPU, GPU (with udev / vulkan hardware detection), Memory, Disks, and Battery
+- Terminal color blocks palette
+- Border formatting (single, double, rounded, bold)
+- Formats: Terminal ANSI, JSON, and YAML
+
+## Installation
+
+### From Source
+
+```bash
+git clone https://github.com/Elxes04/piko.git
+cd piko
+cargo build --release
+sudo cp target/release/piko /usr/local/bin/
+```
+
+Or run the included installer:
+
+```bash
+./install.sh
+```
+
+### From Cargo
+
+```bash
+cargo install --path .
+```
+
+## Usage
+
+Run `piko` without arguments to display system info using your detected distribution logo:
+
+```bash
+piko
+```
+
+### CLI Flags
+
+```text
+Options:
+  -c, --config <CONFIG>                Path to custom TOML config file
+  -t, --theme <THEME>                  Color theme name (e.g. catppuccin, nord, dracula, gruvbox, tokyo-night)
+      --ascii-distro <DISTRO>          Override distribution logo (e.g. arch, nixos, debian, fedora)
+      --logo-only                      Display only the distro logo
+      --list-logos                     List all available distribution logos
+      --list-themes                    List all available themes
+  -f, --format <FORMAT>                Output format: normal, json, yaml [default: normal]
+      --logo-position <POSITION>       Logo position: left, right, top, bottom
+      --logo-size <SIZE>               Logo size: small, medium, large
+      --logo-style <STYLE>             Logo style: ascii, unicode, minimal
+  -b, --border                         Draw a border around the output
+      --border-style <STYLE>           Border style: single, double, rounded, bold
+      --no-separators                  Hide field separators
+      --color-blocks <BOOL>            Toggle color blocks palette (true/false)
+      --gen-config                     Generate default config in ~/.config/piko/config.toml
+      --print-config                   Print default configuration to stdout
+      --export-config <PATH>           Export current configuration to file
+      --import-config <PATH>           Load and apply configuration from file
+  -h, --help                           Print help
+  -V, --version                        Print version
+```
+
+### Examples
+
+```bash
+# Use a specific theme
+piko --theme nord
+
+# Use compact logo size with a border
+piko --logo-size small --border
+
+# Override the distro logo
+piko --distro arch
+
+# Generate a config file to customize
+piko --gen-config
+
+# Export machine-readable system info
+piko --format json
+```
+
+## Configuration
+
+Piko checks for configuration files in the following order:
+
+1. Path supplied to `--config <path>`
+2. Path defined in `$PIKO_CONFIG`
+3. `$XDG_CONFIG_HOME/piko/config.toml` (or `~/.config/piko/config.toml`)
+4. `/etc/piko/config.toml`
+5. Embedded default configuration
+
+Generate a starter configuration file at `~/.config/piko/config.toml`:
+
+```bash
+piko --gen-config
+```
+
+Example configuration snippet:
+
+```toml
+layout = "default"
+
+[output]
+info_keys = [
+    "OS",
+    "Host",
+    "Kernel",
+    "Uptime",
+    "Packages",
+    "Shell",
+    "DE",
+    "WM",
+    "Terminal",
+    "CPU",
+    "GPU",
+    "Memory",
+    "Disk",
+    "Battery",
+]
+show_logo = true
+logo_position = "left"
+logo_size = "medium"
+show_title = true
+show_color_blocks = true
+color_blocks_style = "circle"
+
+[theme]
+name = "catppuccin"
+
+[display]
+border = false
+border_style = "rounded"
+show_separators = true
+separator_symbol = ":"
+```
+
+## Supported Distributions
+
+Piko includes ASCII art for:
+
+Alpine, Android / Termux, Arch Linux, Artix, CentOS, Debian, EndeavourOS, Fedora, FreeBSD, Gentoo, Kali, Linux Mint, macOS, Manjaro, NixOS, OpenBSD, openSUSE, Pop!_OS, Raspberry Pi, Red Hat, Ubuntu, Void Linux, Windows, and generic Linux (Tux).
+
+To see all available logos at any time:
+
+```bash
+piko --list-logos
+```
+
+## Documentation
+
+Full documentation is available in the `docs/` directory:
+
+- [Installation Guide](docs/installation.rst)
+- [Configuration Guide](docs/configuration.rst)
+- [Usage Guide](docs/usage.rst)
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
 
 
-## Documentation 📚
-
-For detailed information about installation, configuration, and advanced features, please see our documentation:
-
-- **[Installation Guide](docs/installation.rst)** - How to install Piko
-- **[Configuration Guide](docs/configuration.rst)** - Customizing Piko
-- **[Usage Guide](docs/usage.rst)** - Command line options and examples
-- **[Advanced Features](docs/ADVANCED_FEATURES.md)** - Advanced customization and features
-
-## Supported Distributions 🐧
-
-Piko includes built-in ASCII art logos for:
-
-- **Arch Linux** - The iconic Arch logo
-- **Ubuntu** - Ubuntu's distinctive logo
-- **Debian** - Debian's classic logo
-- **Fedora** - Fedora's modern logo
-- **Manjaro** - Manjaro's sleek logo
-- **openSUSE** - openSUSE's professional logo
-- **CentOS** - CentOS's enterprise logo
-- **Alpine** - Alpine's minimal logo
-- **Gentoo** - Gentoo's penguin logo
-- **Default** - Generic Linux logo
-
-
-## Contributing 🤝
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-## Changelog 📝
-
-See [CHANGELOG.md](CHANGELOG.md) for a list of changes and version history.
-
-### Adding New Distribution Logos
-
-To add a new distribution logo:
-
-1. Add the ASCII art to `src/distro_logo.rs`
-2. Update the detection logic if needed
-3. Test with your distribution
-
-## License 📄
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments 🙏
-
-- Inspired by [Neofetch](https://github.com/dylanaraps/neofetch)
-- Built with [Rust](https://www.rust-lang.org/)
-- Uses [sysinfo](https://github.com/GuillaumeGomez/sysinfo) for system information
-- Styled with [colored](https://github.com/mackwic/colored)
-
----
-
-**Piko** - Because every penguin deserves a beautiful system information display! 🐧✨
