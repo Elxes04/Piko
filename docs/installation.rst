@@ -6,14 +6,45 @@ This guide covers how to install Piko on Linux, macOS, and Termux.
 Prerequisites
 -------------
 
-Piko is written in Rust and requires a working Rust toolchain (Cargo and Rustc 1.75+).
+Piko is written in Rust and can be built using Cargo or installed directly using Nix flakes.
 
-If you do not have Rust installed:
+Nix / NixOS Flake
+-----------------
+
+Run Piko directly with Nix:
 
 .. code-block:: bash
 
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    source "$HOME/.cargo/env"
+    nix run github:Elxes04/Piko
+
+Install to user profile:
+
+.. code-block:: bash
+
+    nix profile install github:Elxes04/Piko
+
+Add to your NixOS flake configuration:
+
+.. code-block:: nix
+
+    {
+      inputs = {
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+        piko.url = "github:Elxes04/Piko";
+      };
+
+      outputs = { self, nixpkgs, piko, ... }: {
+        nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
+          modules = [
+            ({ pkgs, ... }: {
+              environment.systemPackages = [
+                piko.packages.${pkgs.stdenv.hostPlatform.system}.default
+              ];
+            })
+          ];
+        };
+      };
+    }
 
 Building from Source
 --------------------

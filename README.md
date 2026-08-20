@@ -20,6 +20,43 @@ Piko gathers and displays system metrics alongside distribution ASCII art. It is
 
 ## Installation
 
+### Nix / NixOS
+
+Run directly without installing:
+
+```bash
+nix run github:Elxes04/Piko
+```
+
+Install to profile with Nix Flakes:
+
+```bash
+nix profile install github:Elxes04/Piko
+```
+
+Add to your NixOS configuration (`flake.nix`):
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    piko.url = "github:Elxes04/Piko";
+  };
+
+  outputs = { self, nixpkgs, piko, ... }: {
+    nixosConfigurations.yourhostname = nixpkgs.lib.nixosSystem {
+      modules = [
+        ({ pkgs, ... }: {
+          environment.systemPackages = [
+            piko.packages.${pkgs.stdenv.hostPlatform.system}.default
+          ];
+        })
+      ];
+    };
+  };
+}
+```
+
 ### From Source
 
 ```bash
