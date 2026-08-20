@@ -6,49 +6,76 @@ mod system_info;
 use clap::Parser;
 use std::fs;
 use std::path::PathBuf;
-use toml::Value;
 
-/// A highly customizable system information tool inspired by Neofetch
-#[derive(Parser)]
-#[command(author, version, about, long_about = None)]
+/// Piko - A minimal, fast, and highly customizable system information tool written in Rust
+#[derive(Parser, Debug)]
+#[command(name = "piko", author = "Elxes04", version, about, long_about = None)]
 struct Cli {
     /// Path to a custom config file
-    #[arg(long)]
+    #[arg(short, long)]
     config: Option<PathBuf>,
+
+    /// Select color theme (e.g. catppuccin, dracula, nord, gruvbox, tokyo-night, one-dark, rose-pine, synthwave)
+    #[arg(short, long)]
+    theme: Option<String>,
+
+    /// Distribution logo override (e.g. nixos, arch, ubuntu, debian, fedora, manjaro, mint, pop, alpine, void, macos)
+    #[arg(long, aliases = ["ascii-distro", "distro"])]
+    ascii_distro: Option<String>,
 
     /// Show only the distribution logo
     #[arg(long)]
     logo_only: bool,
 
     /// List all available distribution logos
-    #[arg(long)]
+    #[arg(long, aliases = ["list-distros"])]
     list_logos: bool,
 
+    /// List all available color themes
+    #[arg(long)]
+    list_themes: bool,
+
     /// Output format: normal, json, yaml
-    #[arg(long, default_value = "normal")]
+    #[arg(short, long, default_value = "normal")]
     format: String,
 
     /// Show logo position: left, right, top, bottom
-    #[arg(long, default_value = "left")]
-    logo_position: String,
+    #[arg(long)]
+    logo_position: Option<String>,
 
     /// Logo size: small, medium, large
-    #[arg(long, default_value = "medium")]
-    logo_size: String,
+    #[arg(long)]
+    logo_size: Option<String>,
 
     /// Logo style: ascii, unicode, minimal
-    #[arg(long, default_value = "ascii")]
-    logo_style: String,
+    #[arg(long)]
+    logo_style: Option<String>,
 
     /// Show border around output
-    #[arg(long)]
+    #[arg(short, long)]
     border: bool,
+
+    /// Border style: single, double, rounded, bold
+    #[arg(long)]
+    border_style: Option<String>,
 
     /// Hide separators between info lines
     #[arg(long)]
     no_separators: bool,
 
-    /// Export configuration to file
+    /// Toggle display of color palette blocks (true/false)
+    #[arg(long)]
+    color_blocks: Option<bool>,
+
+    /// Generate default config file in ~/.config/piko/config.toml
+    #[arg(long)]
+    gen_config: bool,
+
+    /// Print the default configuration to standard output
+    #[arg(long)]
+    print_config: bool,
+
+    /// Export current configuration to file
     #[arg(long)]
     export_config: Option<PathBuf>,
 
@@ -57,166 +84,120 @@ struct Cli {
     import_config: Option<PathBuf>,
 }
 
-fn is_termux() -> bool {
-    std::env::var("TERMUX_VERSION").is_ok() || 
-    std::env::var("PREFIX").map(|p| p.contains("/data/data/com.termux")).unwrap_or(false)
-}
-
-fn get_default_config_path() -> PathBuf {
-    if is_termux() {
-        // On Termux, use the user's home directory
-        dirs::home_dir()
-            .unwrap_or_else(|| PathBuf::from("."))
-            .join(".config")
-            .join("piko")
-            .join("default_config.toml")
-    } else if cfg!(target_os = "macos") {
-        dirs::config_dir()
-            .unwrap_or_else(|| PathBuf::from("."))
-            .join("piko")
-            .join("default_config.toml")
-    } else {
-        PathBuf::from("/etc/piko/default_config.toml")
-    }
-}
-
-fn ensure_default_config_exists() {
-    let config_path = get_default_config_path();
-
-    if !config_path.exists() {
-        eprintln!("Configuration file not found at {}", config_path.display());
-        
-        if is_termux() {
-            eprintln!("On Termux, please ensure the config directory exists:");
-            eprintln!("  mkdir -p ~/.config/piko");
-            eprintln!("  cp config/default_config.toml ~/.config/piko/");
-        } else {
-            eprintln!("Please ensure Piko is properly installed.");
-        }
-        
-        std::process::exit(1);
-    }
-}
-
-fn load_config(config_path: Option<PathBuf>) -> Value {
-    let path = config_path.unwrap_or_else(get_default_config_path);
-
-    let contents = fs::read_to_string(&path)
-        .unwrap_or_else(|_| panic!("Unable to read the configuration file from {:?}", path));
-
-    contents.parse().expect("Invalid TOML configuration")
-}
-
-fn create_dynamic_config(cli: &Cli) -> Value {
-    let mut config = load_config(None);
-
-    // Override config with CLI options
-    if let Some(output) = config.get_mut("output") {
-        if let Some(output_table) = output.as_table_mut() {
-            output_table.insert(
-                "logo_position".to_string(),
-                toml::Value::String(cli.logo_position.clone()),
-            );
-            output_table.insert(
-                "logo_size".to_string(),
-                toml::Value::String(cli.logo_size.clone()),
-            );
-            output_table.insert(
-                "logo_style".to_string(),
-                toml::Value::String(cli.logo_style.clone()),
-            );
-        }
-    }
-
-    if let Some(display) = config.get_mut("display") {
-        if let Some(display_table) = display.as_table_mut() {
-            display_table.insert("border".to_string(), toml::Value::Boolean(cli.border));
-            display_table.insert(
-                "show_separators".to_string(),
-                toml::Value::Boolean(!cli.no_separators),
-            );
-        }
-    }
-
-    config
-}
-
-fn export_config(config: &Value, path: &PathBuf) -> Result<(), Box<dyn std::error::Error>> {
-    let config_str = toml::to_string_pretty(config)?;
-    fs::write(path, config_str)?;
-    println!("Configuration exported to: {}", path.display());
-    Ok(())
-}
-
-fn import_config(path: &PathBuf) -> Result<Value, Box<dyn std::error::Error>> {
-    let contents = fs::read_to_string(path)?;
-    let config: Value = contents.parse()?;
-    println!("Configuration imported from: {}", path.display());
-    Ok(config)
-}
-
 fn main() {
     let cli = Cli::parse();
 
-    // Handle special commands first
+    // 1. Handle informational list commands first
     if cli.list_logos {
         output::list_available_logos();
         return;
     }
 
-    // Handle import/export
-    if let Some(import_path) = &cli.import_config {
-        match import_config(import_path) {
-            Ok(config) => {
-                let system_info = system_info::get_system_info();
-                match cli.format.as_str() {
-                    "json" => output::display_json(&system_info),
-                    "yaml" => output::display_yaml(&system_info),
-                    _ => output::display_output(&system_info, &config),
-                }
-                return;
-            }
-            Err(e) => {
-                eprintln!("Error importing configuration: {}", e);
-                std::process::exit(1);
-            }
-        }
+    if cli.list_themes {
+        output::list_available_themes();
+        return;
     }
 
-    // Load configuration
-    let config_value = if cli.config.is_none() && !cli.logo_only {
-        ensure_default_config_exists();
-        create_dynamic_config(&cli)
-    } else {
-        load_config(cli.config)
-    };
+    if cli.print_config {
+        print!("{}", config::EMBEDDED_DEFAULT_CONFIG);
+        return;
+    }
 
-    // Handle export
-    if let Some(export_path) = &cli.export_config {
-        if let Err(e) = export_config(&config_value, export_path) {
-            eprintln!("Error exporting configuration: {}", e);
+    if cli.gen_config {
+        if let Some(config_dir) = dirs::config_dir() {
+            let target_path = config_dir.join("piko").join("config.toml");
+            match config::export_default_config_to(&target_path) {
+                Ok(_) => {
+                    println!(
+                        "Successfully created configuration file at: {}",
+                        target_path.display()
+                    );
+                }
+                Err(e) => {
+                    eprintln!("Error creating configuration file: {}", e);
+                    std::process::exit(1);
+                }
+            }
+        } else {
+            eprintln!("Could not determine user config directory.");
             std::process::exit(1);
         }
         return;
     }
 
-    // Parse configuration
-    let _config = config::Config::from_value(&config_value)
-        .expect("Unable to deserialize the configuration file");
+    // 2. Load configuration (from CLI path, env var, standard paths, or embedded defaults)
+    let config_path_to_load = cli.import_config.as_deref().or(cli.config.as_deref());
+    let mut config = config::load_config_or_default(config_path_to_load);
 
-    // Handle logo-only mode
+    // 3. Apply CLI overrides
+    if let Some(theme_name) = cli.theme {
+        config.theme.name = theme_name;
+    }
+
+    if let Some(distro_name) = cli.ascii_distro {
+        config.logo.distro = distro_name;
+    }
+
+    if let Some(pos) = cli.logo_position {
+        config.output.logo_position = pos;
+    }
+
+    if let Some(size) = cli.logo_size {
+        config.output.logo_size = size;
+    }
+
+    if let Some(style) = cli.logo_style {
+        config.output.logo_style = style;
+    }
+
+    if cli.border {
+        config.display.border = true;
+    }
+
+    if let Some(bstyle) = cli.border_style {
+        config.display.border = true;
+        config.display.border_style = bstyle;
+    }
+
+    if cli.no_separators {
+        config.display.show_separators = false;
+    }
+
+    if let Some(cb) = cli.color_blocks {
+        config.output.show_color_blocks = cb;
+    }
+
+    // 4. Handle export
+    if let Some(ref export_path) = cli.export_config {
+        match toml::to_string_pretty(&config) {
+            Ok(toml_str) => {
+                if let Err(e) = fs::write(export_path, toml_str) {
+                    eprintln!("Error exporting configuration: {}", e);
+                    std::process::exit(1);
+                }
+                println!("Configuration exported to: {}", export_path.display());
+                return;
+            }
+            Err(e) => {
+                eprintln!("Error serializing configuration: {}", e);
+                std::process::exit(1);
+            }
+        }
+    }
+
+    // 5. Handle logo-only mode
     if cli.logo_only {
-        output::display_logo_only(&config_value);
+        output::display_logo_only(&config);
         return;
     }
 
-    // Get system information
+    // 6. Get system information
     let system_info = system_info::get_system_info();
 
-    // Display output based on format
-    match cli.format.as_str() {
+    // 7. Display output based on requested format
+    match cli.format.to_lowercase().as_str() {
         "json" => output::display_json(&system_info),
-        "yaml" => output::display_yaml(&system_info),
-        _ => output::display_output(&system_info, &config_value),
+        "yaml" | "yml" => output::display_yaml(&system_info),
+        _ => output::display_output(&system_info, &config),
     }
 }
