@@ -882,6 +882,23 @@ impl SystemInfo {
         )
     }
 
+    fn is_valid_disk_mount(mount: &str) -> bool {
+        if mount == "/" || mount == "/home" || mount.starts_with("/home/") {
+            return true;
+        }
+        if mount.starts_with("/mnt")
+            || mount.starts_with("/media")
+            || mount.starts_with("/run/media")
+            || mount.starts_with("/Volumes")
+            || mount.starts_with("/data")
+            || mount.starts_with("/storage")
+            || mount.starts_with("/drive")
+        {
+            return true;
+        }
+        false
+    }
+
     pub fn get_disk_info() -> String {
         use sysinfo::{DiskExt, SystemExt};
         let mut sys = sysinfo::System::new();
@@ -892,29 +909,28 @@ impl SystemInfo {
 
         for disk in sys.disks() {
             let mount = disk.mount_point().to_string_lossy().to_string();
-            let fs_name = String::from_utf8_lossy(disk.file_system()).to_string();
+            let fs_name = String::from_utf8_lossy(disk.file_system()).to_lowercase();
 
-            // Ignore temporary, virtual, subvolume noise mounts
-            if mount.starts_with("/tmp")
-                || mount.starts_with("/etc")
-                || mount.starts_with("/proc")
-                || mount.starts_with("/sys")
-                || mount.starts_with("/dev")
-                || mount.starts_with("/run")
-                || mount.starts_with("/nix")
-                || mount.starts_with("/var/lib/docker")
-                || mount.starts_with("/var/lib/flatpak")
-                || mount.contains("@")
-                || fs_name == "tmpfs"
+            // Only allow valid user/primary disk mounts
+            if !Self::is_valid_disk_mount(&mount) {
+                continue;
+            }
+
+            // Ignore virtual filesystems
+            if fs_name == "tmpfs"
                 || fs_name == "devtmpfs"
                 || fs_name == "overlay"
                 || fs_name == "squashfs"
+                || fs_name == "ramfs"
+                || fs_name == "efivarfs"
+                || fs_name == "nullfs"
+                || mount.contains("@")
             {
                 continue;
             }
 
             let total_gib = disk.total_space() as f64 / (1024.0 * 1024.0 * 1024.0);
-            if total_gib < 0.5 {
+            if total_gib < 1.0 {
                 continue;
             }
 
@@ -1077,5 +1093,26 @@ mod tests {
         assert!(info.contains_key("OS"));
         assert!(info.contains_key("Kernel"));
         assert!(info.contains_key("Memory"));
+    }
+
+    #[test]
+    fn test_valid_disk_mount() {
+        assert!(SystemInfo::is_valid_disk_mount("/"));
+        assert!(SystemInfo::is_valid_disk_mount("/home"));
+        assert!(SystemInfo::is_valid_disk_mount("/home/user"));
+        assert!(SystemInfo::is_valid_disk_mount("/mnt/data"));
+        assert!(SystemInfo::is_valid_disk_mount("/media/usb"));
+        assert!(SystemInfo::is_valid_disk_mount("/run/media/user/drive"));
+        assert!(SystemInfo::is_valid_disk_mount("/Volumes/Macintosh HD"));
+
+        assert!(!SystemInfo::is_valid_disk_mount("/boot"));
+        assert!(!SystemInfo::is_valid_disk_mount("/boot/efi"));
+        assert!(!SystemInfo::is_valid_disk_mount("/usr"));
+        assert!(!SystemInfo::is_valid_disk_mount("/usr/local"));
+        assert!(!SystemInfo::is_valid_disk_mount("/var"));
+        assert!(!SystemInfo::is_valid_disk_mount("/srv"));
+        assert!(!SystemInfo::is_valid_disk_mount("/tmp"));
+        assert!(!SystemInfo::is_valid_disk_mount("/.host-etc"));
+        assert!(!SystemInfo::is_valid_disk_mount("/nix"));
     }
 }
